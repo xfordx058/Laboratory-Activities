@@ -1,1 +1,5 @@
 # Laboratory-Activities
+
+ANQUILO, GLEN FORD C.
+MAGALLANES KAI JUSTIN D.
+**BSIT 2B**
