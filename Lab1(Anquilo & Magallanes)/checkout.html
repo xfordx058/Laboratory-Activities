@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 5 (Checkout)</title>
+</head>
+<body>
+    <section class="checkout-process">
+        <fieldset>
+            <legend>Checkout</legend>
+            <form action="#">
+                <label for="address">Shipping Address:</label><br>
+                <input type="text" name="fullname" placeholder="Full Name" required><br><br>
+                <input type="text" name="address" placeholder="Country" required><br><br>
+                <input type="text" name="address" placeholder="Region" required><br><br>
+                <input type="text" name="address" placeholder="Province" required><br><br>
+                <input type="text" name="address" placeholder="Municipality" required><br><br>
+                <input type="text" name="address" placeholder="Barangay" required><br><br>
+                <input type="text" name="address" placeholder="Street Address" required><br><br>
+                <input type="text" inputmode="numeric" placeholder="Zip Code" required><br><br>
+
+                <!-- <label for="payment">Payment Method:</label><br>
+                <select id="payment" name="payment" required>
+                    <option value="creditcard">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cod">Cash on Delivery</option>
+                </select><br><br> -->
+
+                <form>
+                    <label for="payment">Payment Method:</label><br>
+                    <input type="radio" id="creditcard" name="payment" value="creditcard" required>
+                    <label for="creditcard">Credit Card</label>
+                    <input type="radio" id="paypal" name="payment" value="Paypal" required>
+                    <label for="paypal">Paypal</label>
+                </form>
+
+                <input type="submit" value="Place Order">
+            </form>
+        </fieldset>
+    </section>
+    
+</body>
+</html>

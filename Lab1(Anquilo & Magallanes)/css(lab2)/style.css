@@ -1,0 +1,378 @@
+/* Task 1: The Visual Foundation (Global Styles) */
+:root {
+    --primary-color: #2b1d50;
+    --secondary-color: #000000;
+    --background-color: #1e4346;
+    --text-color: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+h1 {
+    color: var(--text-color);
+    text-align: center;
+    font-size: 40px;
+}
+
+.navs {
+    background-color: var(--secondary-color);
+    padding: 15px 0;
+    border-bottom: 2px solid var(--secondary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.nav-li {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+
+.nav-li a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+
+}
+
+.nav-li a:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.nav-li a:active {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.nav-li a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.hero-banner {
+    background-color: var(--primary-color);
+    padding: 50px 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero-banner button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    margin-top: 20px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+}
+
+.hero-banner button:hover {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+
+.Products {
+    padding: 20px;
+    text-align: center;
+}
+
+.prdct-header h1 {
+    color: var(--text-color);
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.prdct-header p {
+    color: var(--text-color);
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.product-card {
+    width: 250px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.filter-panel {
+    background-color: var(--primary-color);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.filter-panel h3 {
+    color: var(--text-color);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.filter-panel label {
+    color: var(--text-color);
+    font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filter-panel input[type="checkbox"],
+.filter-panel input[type="radio"] {
+    margin-right: 10px;
+}
+
+.filter-panel h2 {
+    color: var(--text-color);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.Cart {
+    padding: 20px;
+    text-align: center;
+}
+
+.Cart ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.Cart ul li {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    padding: 15px;
+    width: 400px;
+}
+
+.Cart ul li img {
+    width: 80px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.Cart ul li h3 {
+    color: var(--text-color);
+    font-size: 18px;
+    flex: 1;
+    text-align: left;
+}
+
+.Cart ul li span {
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.Cart ul li input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+.subtotal-content {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.subtotal-price {
+    color: var(--text-color);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.Proceed-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 30px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.Proceed-btn:hover {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+.message {
+    margin-top: 30px;
+}
+
+.message p {
+    color: var(--text-color);
+    font-size: 18px;
+
+}
+
+.Cart:empty {
+    background-color: var(--primary-color);
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.signup-form input:required {
+    border: 2px solid var(--secondary-color);
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.signup-form .btn {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    align-items: center;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th,
+.table td {
+    border: 1px solid var(--secondary-color);
+    padding: 10px;
+    text-align: left;
+}
+
+table th:first-child {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+
+
+.reviews blockquote {
+    position: relative;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-left: 5px solid var(--secondary-color);
+    margin: 20px 0;
+}
+
+.reviews blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-size: 40px;
+    color: var(--secondary-color);
+}
+
+.reviews blockquote::after {
+    content: "”";
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    font-size: 40px;
+    color: var(--secondary-color);
+}
+
+.user-account nav ul li::marker {
+    color: var(--primary-color);
+    font-size: 10px;
+}
+
+.user-account nav ul li {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.user-account nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.user-account nav ul li a:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.purchase-form {
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.specs-table th,    .specs-table td {
+    border: 1px solid var(--secondary-color);
+    padding: 10px;
+    text-align: left;
+}
+
+/* …or create a new repository on the command line
+echo "# DCC-Web-System" >> README.md
+
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/xfordx058/Laboratory-Activities.git
+git push -u origin main
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/xfordx058/Laboratory-Activities.git
+git branch -M main
+git push -u origin main */
