@@ -7,9 +7,23 @@
     <link rel="stylesheet" href="css(lab2)/style.css" />
   </head>
   <body>
+    <header>
+      <div id="logo">Logo</div>
+      <div class="nav-wrap">
+        <nav class="navs">
+          <ul class="nav-li">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="Cart.html">Cart</a></li>
+            <li><a href="account.html">Profile</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
     <main>
       <section>
         <h1>Technical Specs</h1>
+        <div class="table-wrap">
         <table>
           <tr>
             <th>Display:</th>
@@ -52,13 +66,14 @@
             <td>5G, Wi-Fi 6, Bluetooth 5.0, Lightning port</td>
           </tr>
         </table>
+        </div>
 
         <br>
         <form bindsubmit="">
             <h1>Purchase</h1>
             <label for="qnty">Quantity</label>
             <input type="number" id="qnty" min="1" value="1">
-            <input type="button" value="Add to cart">
+            <input type="button" class="add-cart-btn" value="Add to cart">
         </form>
       </section>
 

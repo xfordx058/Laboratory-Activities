@@ -4,24 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account</title>
+    <link rel="stylesheet" href="css(lab2)/style.css" />
 </head>
 <body>
     <header>
-        <h1>Welcome, Magallanes, Kai Justin</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Order History</a></li>
-                <li><a href="#p">Profile Settings</a></li>
-                <li><a href="#">Wishlist</a></li>
-            </ul>
-        </nav>
+        <div id="logo">Logo</div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart</a></li>
+                    <li><a href="account.html">Profile</a></li>
+                    <li><a href="#p">Profile Settings</a></li>
+                    <li><a href="#">Wishlist</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
+        <h1>Welcome! Magallanes, Kai Justin D.</h1>
         <section id="purchase-history">
             <h2>Previous Purchases</h2>
-            
-            <details>
+            <ol class="order-history">
+            <li><details>
                 <summary>Order #1001 - Samsung Galaxy A23 5G - $10.00 (January 15, 2026)</summary>
                 <dl>
                     <dt>Product:</dt>
@@ -35,9 +42,9 @@
                     <dt>Status:</dt>
                     <dd>Delivered</dd>
                 </dl>
-            </details>
+            </details></li>
 
-            <details>
+            <li><details>
                 <summary>Order #1002 - Samsung Galaxy M53 5G - $15.00 (January 22, 2026)</summary>
                 <dl>
                     <dt>Product:</dt>
@@ -51,9 +58,9 @@
                     <dt>Status:</dt>
                     <dd>Delivered</dd>
                 </dl>
-            </details>
+            </details></li>
 
-            <details>
+            <li><details>
                 <summary>Order #1003 - Samsung Galaxy Note5 - $20.00 (February 5, 2026)</summary>
                 <dl>
                     <dt>Product:</dt>
@@ -67,7 +74,8 @@
                     <dt>Status:</dt>
                     <dd>Processing</dd>
                 </dl>
-            </details>
+            </details></li>
+            </ol>
         </section>
     </main>
 

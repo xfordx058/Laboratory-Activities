@@ -7,8 +7,22 @@
     <link rel="stylesheet" href="css(lab2)/style.css" />
   </head>
   <body>
+    <header>
+      <div id="logo">Logo</div>
+      <div class="nav-wrap">
+        <nav class="navs">
+          <ul class="nav-li">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="Cart.html">Cart</a></li>
+            <li><a href="account.html">Profile</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
     <section class="Cart">
       <h1>Shopping Cart</h1>
+      <div class="cart-items">
       <ul>
         <li>
           <img src="images/Galaxy A23 5g.jpg" alt="Samsung Galaxy A23 5G" />
@@ -31,6 +45,7 @@
           <input type="number" value="1" placeholder="Quantity" />
         </li>
       </ul>
+      </div>
       <section class="subtotal-content">
         <span class="subtotal-price">Subtotal: $00.00</span><br />
         <a href="checkout.html" class="Proceed-btn">Proceed to Checkout</a>

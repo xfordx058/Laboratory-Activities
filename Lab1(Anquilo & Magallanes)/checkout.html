@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="css(lab2)/style.css" />
 </head>
 <body>
+    <header>
+      <div id="logo">Logo</div>
+      <div class="nav-wrap">
+        <nav class="navs">
+          <ul class="nav-li">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="Cart.html">Cart</a></li>
+            <li><a href="account.html">Profile</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="checkout-wrapper">
     <section class="checkout-process">
         <fieldset>
             <legend>Checkout</legend>
@@ -28,11 +42,11 @@
                     <option value="cod">Cash on Delivery</option>
                 </select><br><br> -->
 
-                <form>
+                <form class="form">
                     <label for="payment">Payment Method:</label><br>
-                    <input type="radio" id="creditcard" name="payment" value="creditcard" required>
+                    <input class="credit" type="radio" id="creditcard" name="payment" value="creditcard" required>
                     <label for="creditcard">Credit Card</label>
-                    <input type="radio" id="paypal" name="payment" value="Paypal" required>
+                    <input class="paypal" type="radio" id="paypal" name="payment" value="Paypal" required>
                     <label for="paypal">Paypal</label>
                 </form>
 
@@ -40,6 +54,12 @@
             </form>
         </fieldset>
     </section>
-    
+    <aside class="checkout-order-summary">
+        <h3>Order Summary</h3>
+        <p>Subtotal: $45.00</p>
+        <p>Shipping: Calculated at checkout</p>
+        <p><strong>Total: $45.00</strong></p>
+    </aside>
+    </div>
 </body>
 </html>
