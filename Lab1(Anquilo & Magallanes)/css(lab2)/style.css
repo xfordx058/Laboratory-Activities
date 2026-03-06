@@ -156,6 +156,15 @@ input:valid {
   background-color: #e8f8f5;
 }
 
+.add-cart-btn {
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
 /*Task 5*/
 table {
   width: 100%;
@@ -255,7 +264,21 @@ header .nav-wrap {
   border-radius: 6px;
 }
 
-#logo, .header-logo {
+.logo-container{
+display:flex;
+align-items:center;
+}
+
+.logo{
+height:50px;
+width:auto;
+object-fit:contain;
+}
+
+
+
+.header-logo {
+  
   color: var(--text-light);
   font-weight: 700;
   margin-bottom: 12px;
@@ -537,6 +560,7 @@ button.add-cart-btn:hover {
     flex-direction: row;
     justify-content: flex-end;
     width: auto;
+    backdrop-filter: blur(50px);
   }
 
   #logo, .header-logo {
