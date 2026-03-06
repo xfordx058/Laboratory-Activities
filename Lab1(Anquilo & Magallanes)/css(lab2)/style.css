@@ -1,7 +1,4 @@
-/* ========== LAB 3: Responsive Design – Mobile-First ========== */
-
-/* Task 1: Breakpoints (Base = Mobile 0–480px; Tablet 481–768px; Desktop 769–1280px) */
-
+/*Task 1*/
 :root {
   --primary-color: #2c3e50;
   --accent-color: #e67e22;
@@ -20,6 +17,7 @@ body {
   line-height: 1.6;
   background-color: var(--bg-light);
   color: var(--text-main);
+  margin: 0;
 }
 
 /* Task 5: Fluid images – global */
@@ -81,7 +79,7 @@ a:focus {
   outline-offset: 2px;
 }
 
-/* Task 3: Product grid – CSS Grid (Mobile: 1 column) */
+/* Task 3 */
 .Products,
 .prdct-header {
   padding: 20px;
@@ -127,7 +125,6 @@ a:focus {
 }
 
 /*Task 4*/
-/* Empty cart message (:empty) */
 .Cart .cart-items:empty,
 .cart-items:empty {
   display: block;
@@ -230,6 +227,7 @@ header {
   align-items: center;
   background-color: var(--primary-color);
   padding: 16px 24px;
+  margin: 0;
 }
 
 .navs,
@@ -518,7 +516,7 @@ button.add-cart-btn:hover {
   animation: bounce 0.5s ease-out;
 }
 
-/* ========== TABLET: min-width 481px ========== */
+/* TABLET: min-width 481px */
 @media (min-width: 481px) {
   .product-grid,
   .products {
@@ -527,7 +525,7 @@ button.add-cart-btn:hover {
 
 }
 
-/* ========== DESKTOP: min-width 769px ========== */
+/*  DESKTOP: min-width 769px */
 @media (min-width: 769px) {
   header {
     flex-direction: row;
