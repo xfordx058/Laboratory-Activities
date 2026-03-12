@@ -1,4 +1,4 @@
-//Problem 1
+//Problem 1  Anquilo
 function checkVariable(input) {
     const type = typeof input;
     
@@ -29,7 +29,7 @@ function checkVariable(input) {
     }
 }
 
-// Problem 2
+// Problem 2 Anquilo
 
 function generateIDs(count) {
     const Std_ids = [];
@@ -46,4 +46,7 @@ function generateIDs(count) {
 
     
 }
+
+// Problem 3 Anquilo
+
 
