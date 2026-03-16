@@ -125,10 +125,6 @@ class Item {
     }
 }
 
-let phone = new Item("Phone", 500);
-console.log(phone.name);       
-console.log(phone.price);       
-console.log(phone.finalPrice);  
 
 let phone = new Item("Phone", 500);
 console.log(phone.name);        
