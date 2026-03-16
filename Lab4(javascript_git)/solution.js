@@ -48,5 +48,53 @@ function generateIDs(count) {
 }
 
 // Problem 3 Anquilo
+function calculateTotal(...numbers) {
+  
+    for (let num of numbers) {
+        if (typeof num !== 'number') {
+            throw new TypeError("Invalid input: All arguments must be numbers");
+        }
+    }
+    
+
+    return numbers.reduce(function(sum, num) {
+        return sum + num;
+    }, 0);
+}
+console.log(calculateTotal(1, 2, 5));
+
+// Problem 4 
+function getTopScorers(playerList) {
+  
+    let highScorers = playerList.filter(function(player) {
+        return player.score > 8;
+    });
+    
+    
+    let names = highScorers.map(function(player) {
+        return player.name;
+    });
+    
+   
+    return names.join(", ");
+}
+
+
+let players = [
+    {name: "ROCKY", score: 10},
+    {name: "Judy", score: 5},
+    {name: "Glen", score: 9},
+    {name: "Dyona", score: 7},
+    {name: "Yul", score: 12},
+    {name: "Francis", score: 8},
+    {name: "GracePoe", score: 15},
+    {name: "HenryDict", score: 3},
+    {name: "IvyCruz", score: 11},
+    {name: "jenny", score: 6}
+];
+
+console.log(getTopScorers(players));
+
+
 
 
