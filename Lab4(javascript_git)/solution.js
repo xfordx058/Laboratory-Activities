@@ -95,6 +95,24 @@ let players = [
 
 console.log(getTopScorers(players));
 
+// problem 5 The Private Inventory
+class Item {
+    #discount = 0.1;  
+    
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
+    }
+    
+    get finalPrice() {
+        let discountAmount = this.price * this.#discount;
+        return this.price - discountAmount;
+    }
+}
 
 
+let phone = new Item("Phone", 500);
+console.log(phone.name);       
+console.log(phone.price);       
+console.log(phone.finalPrice);  
 
