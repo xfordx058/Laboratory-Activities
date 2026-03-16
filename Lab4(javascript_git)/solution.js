@@ -96,5 +96,45 @@ let players = [
 console.log(getTopScorers(players));
 
 
+// Problem 5: The Private Inventory
+class Item {
+    #discount = 0.1;  
+    
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
+    }
+    
+    get finalPrice() {
+        let discountAmount = this.price * this.#discount;
+        return this.price - discountAmount;
+    }
+}
 
 
+let phone = new Item("Phone", 500);
+console.log(phone.name);        
+console.log(phone.price);       
+console.log(phone.finalPrice);  
+
+// Problem 6: Robust Division
+function safeDivide(a, b) {
+    try {
+        if (b === 0) {
+            throw new Error("Cannot divide by zero");
+        }
+        let result = a / b;
+        return result;
+        
+    } catch (error) {
+        return error.message;
+        
+    } finally {
+        console.log("Operation attempted");
+    }
+}
+
+
+console.log(safeDivide(10, 2));   
+console.log(safeDivide(10, 0));   
+console.log(safeDivide(20, 4));   
