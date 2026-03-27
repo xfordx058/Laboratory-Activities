@@ -1,40 +1,48 @@
-<!doctype html>
+<!-- Cart.html -->
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>task 4 (Cart)</title>
+    <title>Shopping Cart | iPhone Shop</title>
     <link rel="stylesheet" href="css(lab2)/style.css" />
-  </head>
-  <body>
+</head>
+<body>
     <header>
-      <div class="logo-container">
-<img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
-</div>
-      <div class="nav-wrap">
-        <nav class="navs">
-          <ul class="nav-li">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="Cart.html">Cart</a></li>
-            <li><a href="account.html">Profile</a></li>
-          </ul>
-        </nav>
-      </div>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+
     <section class="Cart" id="cart-page">
-      <h1>Shopping Cart</h1>
-      <div class="cart-items">
-      <ul id="cart-list"></ul>
-      </div>
-      <section class="subtotal-content">
-        <span class="subtotal-price" id="subtotal-price">Subtotal: $0.00</span><br />
-        <a href="checkout.html" class="Proceed-btn">Proceed to Checkout</a>
-      </section>
-      <section class="message" id="empty-cart-message">
-        <p>"Your Cart is Currently Empty"</p>
-      </section>
+        <h1>Shopping Cart</h1>
+        
+        <div id="cart-content">
+            <ul id="cart-list" class="cart-items"></ul>
+            
+            <section class="subtotal-content">
+                <span class="subtotal-price" id="subtotal-price">Subtotal: ₱0.00</span><br>
+                <a href="checkout.html" class="Proceed-btn">Proceed to Checkout</a>
+                <button id="clear-cart" class="btn-secondary">Clear Cart</button>
+            </section>
+        </div>
+
+        <section class="message" id="empty-cart-message" style="display: none;">
+            <p>"Your Cart is Currently Empty"</p>
+            <a href="products.html" class="Proceed-btn">Continue Shopping</a>
+        </section>
     </section>
-    <script src="script.js"></script>
-  </body>
+
+    <script src="js/script.js"></script>
+</body>
 </html>
