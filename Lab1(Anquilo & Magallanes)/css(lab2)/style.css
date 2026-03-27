@@ -156,6 +156,18 @@ input:valid {
   background-color: #e8f8f5;
 }
 
+input.error {
+  border-color: #c0392b !important;
+  background-color: #fdecea;
+}
+
+.field-error {
+  color: #c0392b;
+  font-size: 0.95rem;
+  min-height: 1.25rem;
+  margin: 8px 0;
+}
+
 /*Task 5*/
 table {
   width: 100%;
@@ -514,6 +526,10 @@ button.add-cart-btn:hover {
 .product-card.bounce-me,
 .bounce-me {
   animation: bounce 0.5s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 /* TABLET: min-width 481px */

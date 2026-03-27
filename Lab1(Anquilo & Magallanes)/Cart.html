@@ -20,39 +20,19 @@
         </nav>
       </div>
     </header>
-    <section class="Cart">
+    <section class="Cart" id="cart-page">
       <h1>Shopping Cart</h1>
       <div class="cart-items">
-      <ul>
-        <li>
-          <img src="images/Galaxy A23 5g.jpg" alt="Samsung Galaxy A23 5G" />
-          <h3>Samsung Galaxy A23 5G</h3>
-          <span>$10.00</span>
-          <input type="number" value="1" placeholder="Quantity" />
-        </li>
-
-        <li>
-          <img src="images/Samsung M53 5G.webp" alt="Samsung Galaxy M53 5g" />
-          <h3>Samsung Galaxy M53 5g</h3>
-          <span>$15.00</span>
-          <input type="number" value="1" placeholder="Quantity" />
-        </li>
-
-        <li>
-          <img src="images/Galaxy Note5.jpg" alt="Samsung Galaxy Note5" />
-          <h3>Samsung Galaxy Note5</h3>
-          <span>$20.00</span>
-          <input type="number" value="1" placeholder="Quantity" />
-        </li>
-      </ul>
+      <ul id="cart-list"></ul>
       </div>
       <section class="subtotal-content">
-        <span class="subtotal-price">Subtotal: $00.00</span><br />
+        <span class="subtotal-price" id="subtotal-price">Subtotal: $0.00</span><br />
         <a href="checkout.html" class="Proceed-btn">Proceed to Checkout</a>
       </section>
-      <section class="message">
+      <section class="message" id="empty-cart-message">
         <p>"Your Cart is Currently Empty"</p>
       </section>
     </section>
+    <script src="script.js"></script>
   </body>
 </html>
