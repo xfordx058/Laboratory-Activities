@@ -1,119 +1,51 @@
-<!Doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-commerce Structure</title>
+    <title>iPhone Shop | Premium Mobile Devices</title>
     <link rel="stylesheet" href="css(lab2)/style.css">
-  </head>
-  <body>
-      
+</head>
+<body>
     <header>
-      <div class="logo-container">
-<img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
-</div>
-      <div class="nav-wrap">
-      <nav class="navs">
-        <ul class="nav-li">
-          <li><a class="home-links" href="index.html">Home</a></li>
-          <li><a class="products-links" href="products.html">Products</a></li>
-          <li><a href="Cart.html">Cart</a></li>
-          <li><a href="account.html">Profile</a></li>
-        </ul>
-      </nav>
-      </div>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <section class="hero-banner">
-        <h1>Welocome to our Shop Enjoy Shopping</h1>
-        <p>Enjoy Shopping Online</p>
-        <button>Shop Now</button>
+        <h1>Welcome to iPhone Shop</h1>
+        <p>Premium iPhones at unbeatable prices</p>
+        <button onclick="window.location.href='products.html'">Shop Now</button>
     </section>
 
-    
-<section class="Products">
-    <div class="prdct-header">
-        <h1>Featured Products</h1>
-        <p>Enjoy our Featured Products</p>
-    </div>
-    
-   <div class="product-grid">
-      <article class="product-card">
-        <div class="img-product"><img src="images/p1.jfif" alt="Iphone12"></div>
-        <h3>Iphone 17</h3>
-        <p class="info"> iPhone 13 (released 2021)</p>
-        <div class="price-row">
-          <span class="price">₱49,000</span>
-            
+    <section class="Products">
+        <div class="prdct-header">
+            <h2>Featured Products</h2>
+            <p>Latest iPhone models with warranty</p>
         </div>
-      </article>
+        <div id="featured-container" class="product-grid"></div>
+    </section>
 
-      <article class="product-card">
-        <div class="img-product"><img src="images/ip156.jfif" alt="Iphone12"></div>
-        <h3>Iphone 15</h3>
-        <p class="info">Perfect for beginners building clean UI layouts.</p>
-        <div class="price-row">
-          <span class="price">₱59999</span>
-          
+    <section class="Products">
+        <div class="prdct-header">
+            <h2>Discounted Products</h2>
+            <p>Limited time offers</p>
         </div>
-      </article>
+        <div id="discounted-container" class="product-grid"></div>
+    </section>
 
-      <article class="product-card">
-        <div class="img-product"><img src="images/ip002.jfif" alt="Iphone12"></div>
-        <h3>Iphone 13</h3>
-        <p class="info">Perfect for beginners building clean UI layouts.</p>
-        <div class="price-row">
-          <span class="price">₱59999</span>
-            
-        </div>
-      </article>
-
-      
-      
-  </section>
-
-  <section class="Products">
-    <div class="prdct-header">
-        <h1>Discounted Products</h1>
-        <p>Enjoy our Latest Discounted Products</p>
-    </div>
-    
-
-   <div class="product-grid">
-
-      <article class="product-card">
-        <div class="img-product"><img src="images/p1.jfif" alt="iphone13"></div>
-        <h3>Iphone 17</h3>
-        <p> iPhone 17 Pro Max (2026 model)</p>
-        <div>
-          <span>₱599 <sup><del>₱1999</del></sup></span>
-            
-        </div>
-      </article>
-
-      <article class="product-card">
-        <div class="img-product"><img src="images/ip001.jfif" alt="Iphone15"></div>
-        <h3>Iphone 17</h3>
-        <p> iPhone 17 Pro Max (2026 model)</p>
-        <div>
-          <span>₱599 <sup><del>₱1999</del></sup></span>
-           
-        </div>
-      </article>
-
-
-      <article class="product-card">
-        <div class="img-product"><img src="images/ip16.jfif" alt="Iphone14"></div>
-        <h3>Iphone 16</h3>
-        <p> iPhone 16 Pro Max (2025 model)</p>
-        <div>
-          <span>₱599 <sup><del>₱1999</del></sup></span>
-           
-        </div>
-      </article>
-
-  </section>
-
-    <script src="script.js"></script>
-  </body>
+    <script src="js/script.js"></script>
+</body>
 </html>
