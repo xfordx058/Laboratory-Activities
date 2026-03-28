@@ -1,4 +1,9 @@
-/*Task 1*/
+/* style.css - iPhone Shop E-commerce with Lab 6 Requirements */
+/* Fixed and organized with all Lab 6 specifications */
+
+/* ==========================================
+   TASK 1: CSS Variables (Root)
+   ========================================== */
 :root {
   --primary-color: #2c3e50;
   --accent-color: #e67e22;
@@ -8,6 +13,16 @@
   --border-color: #bdc3c7;
   --success-color: #27ae60;
   --focus-color: #3498db;
+  --error-color: #c0392b;
+}
+
+/* ==========================================
+   Global Base Styles
+   ========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -17,13 +32,13 @@ body {
   line-height: 1.6;
   background-color: var(--bg-light);
   color: var(--text-main);
-  margin: 0;
 }
 
 /* Task 5: Fluid images – global */
 img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
 h1, h2, h3 {
@@ -40,21 +55,24 @@ h3 { font-size: 1.25rem; }
 li { list-style: none; }
 a { text-decoration: none; }
 
-/*Task 2*/
+/* ==========================================
+   TASK 2: Transitions & Interactions
+   ========================================== */
 nav a,
 button,
 input[type="submit"],
 input[type="button"],
 a.Proceed-btn,
-a[href] {
+a[href],
+.add-cart-btn {
   transition: background-color 0.3s ease, color 0.3s ease,
-              text-decoration 0.3s ease, outline 0.2s ease;
+              text-decoration 0.3s ease, outline 0.2s ease, transform 0.2s ease;
 }
 
 nav a:hover,
 .hero-banner button:hover,
 a.Proceed-btn:hover,
-.product-card a:hover {
+.add-cart-btn:hover {
   background-color: var(--accent-color);
   color: var(--text-light);
   text-decoration: none;
@@ -64,7 +82,8 @@ button:active,
 input[type="submit"]:active,
 input[type="button"]:active,
 a.Proceed-btn:active,
-nav a:active {
+nav a:active,
+.add-cart-btn:active {
   background-color: var(--primary-color);
   transform: scale(0.98);
 }
@@ -74,181 +93,21 @@ button:focus,
 input[type="submit"]:focus,
 input[type="button"]:focus,
 nav a:focus,
-a:focus {
+a:focus,
+.add-cart-btn:focus {
   outline: 2px solid var(--focus-color);
   outline-offset: 2px;
 }
 
-/* Task 3 */
-.Products,
-.prdct-header {
-  padding: 20px;
-  text-align: center;
-}
-
-.product-grid,
-.products {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 20px;
-}
-
-.products .product-card,
-.product-grid .product-card,
-.Products .product-card {
-  padding: 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  background-color: var(--text-light);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.product-grid .product-card:nth-child(odd),
-.products .product-card:nth-child(odd) {
-  background-color: #fafafa;
-  border-color: var(--accent-color);
-}
-
-.product-grid .product-card:nth-child(even),
-.products .product-card:nth-child(even) {
-  background-color: #fff8f0;
-  border-color: var(--primary-color);
-}
-
-.product-card img,
-.img-product img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  display: block;
-}
-
-/*Task 4*/
-.Cart .cart-items:empty,
-.cart-items:empty {
-  display: block;
-  padding: 40px;
-  background-color: #ffeaa7;
-  border: 2px dashed var(--accent-color);
-  border-radius: 12px;
-  text-align: center;
-  color: var(--primary-color);
-  font-style: italic;
-}
-
-/* Currency symbol (::before) */
-.price::before {
-  content: "₱ ";
-  font-weight: bold;
-  color: var(--accent-color);
-}
-
-/* Required and valid input (:required / :valid) */
-input:required {
-  border: 2px solid var(--primary-color);
-  padding: 8px 12px;
-  border-radius: 6px;
-}
-
-input:valid {
-  border-color: var(--success-color);
-  background-color: #e8f8f5;
-}
-
-input.error {
-  border-color: #c0392b !important;
-  background-color: #fdecea;
-}
-
-.field-error {
-  color: #c0392b;
-  font-size: 0.95rem;
-  min-height: 1.25rem;
-  margin: 8px 0;
-}
-
-.add-cart-btn {
-  background-color: var(--accent-color);
-  color: var(--text-light);
-  border: none;
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-/*Task 5*/
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-table th,
-table td {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  text-align: left;
-}
-
-table th:first-child,
-table td:first-child,
-table tr th {
-  font-weight: bold;
-  color: var(--primary-color);
-  background-color: #ecf0f1;
-}
-
-/* Marker bullets (::marker) */
-#purchase-history ul li::marker,
-.order-history li::marker,
-details summary::marker {
-  color: var(--accent-color);
-  font-size: 1.2em;
-}
-
-/* Reviews quotes (::before / ::after) */
-.reviews blockquote {
-  position: relative;
-  padding: 24px 32px;
-  margin: 20px 0;
-  background-color: var(--text-light);
-  border-left: 4px solid var(--accent-color);
-  font-style: italic;
-}
-
-.reviews blockquote::before {
-  content: "\201C"; 
-  position: absolute;
-  top: 8px;
-  left: 12px;
-  font-size: 48px;
-  color: var(--accent-color);
-  font-family: Georgia, serif;
-  line-height: 1;
-}
-
-.reviews blockquote::after {
-  content: "\201D"; 
-  position: absolute;
-  bottom: 8px;
-  right: 12px;
-  font-size: 48px;
-  color: var(--accent-color);
-  font-family: Georgia, serif;
-  line-height: 1;
-}
-/* Task 2: Header & Nav – Flexbox (Mobile: column stack; align-items: center) */
+/* ==========================================
+   TASK 2: Header & Navigation (Flexbox)
+   ========================================== */
 header {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: var(--primary-color);
   padding: 16px 24px;
-  margin: 0;
 }
 
 .navs,
@@ -265,7 +124,15 @@ header .nav-wrap {
   width: 100%;
 }
 
-.nav-li { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.nav-li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
 
 .nav-li li { margin: 0; }
 
@@ -276,27 +143,21 @@ header .nav-wrap {
   border-radius: 6px;
 }
 
-.logo-container{
-display:flex;
-align-items:center;
-}
-
-.logo{
-height:50px;
-width:auto;
-object-fit:contain;
-}
-
-
-
-.header-logo {
-  
-  color: var(--text-light);
-  font-weight: 700;
+.logo-container {
+  display: flex;
+  align-items: center;
   margin-bottom: 12px;
 }
 
-/* Task 4: Hero – Flexbox center content horizontally and vertically */
+.logo {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ==========================================
+   TASK 4: Hero Banner (Flexbox)
+   ========================================== */
 .hero-banner {
   display: flex;
   flex-direction: column;
@@ -309,7 +170,15 @@ object-fit:contain;
   color: var(--text-light);
 }
 
-.hero-banner h1 { color: var(--text-light); }
+.hero-banner h1 { 
+  color: var(--text-light); 
+  margin-bottom: 12px;
+}
+
+.hero-banner p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
 
 .hero-banner button {
   background-color: var(--accent-color);
@@ -321,37 +190,282 @@ object-fit:contain;
   cursor: pointer;
 }
 
-/* Forms & Signup */
-.signup-form {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 24px;
+/* ==========================================
+   TASK 3: Product Grid Layout
+   ========================================== */
+.Products,
+.prdct-header {
+  padding: 20px;
+  text-align: center;
 }
 
-.signup-form fieldset {
+.prdct-header h2 {
+  margin-bottom: 8px;
+}
+
+.prdct-header p {
+  color: var(--text-main);
+  opacity: 0.8;
+}
+
+.product-grid,
+.products {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Product Card Styling with Lab 6 Dynamic Classes */
+.product-card {
+  padding: 20px;
   border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--text-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Alternating colors for visual variety */
+.product-card:nth-child(odd) {
+  background-color: #fafafa;
+  border-color: var(--accent-color);
+}
+
+.product-card:nth-child(even) {
+  background-color: #fff8f0;
+  border-color: var(--primary-color);
+}
+
+/* Product Image Container */
+.img-product {
+  margin-bottom: 12px;
+  overflow: hidden;
   border-radius: 8px;
-  padding: 24px;
 }
 
-.signup-form input[type="text"],
-.signup-form input[type="email"],
-.signup-form input[type="password"] {
-  width: 90%;
-  margin-bottom: 16px;
+.img-product img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .img-product img {
+  transform: scale(1.05);
+}
+
+.product-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.product-card .info {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  flex-grow: 1;
+}
+
+/* Price Row with View Details and Add to Cart */
+.price-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-color);
   display: block;
+  margin-bottom: 8px;
 }
 
-.signup-form input[type="submit"] {
+/* Currency symbol using ::before pseudo-element (Lab 6) */
+.price::before {
+  content: "₱ ";
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+/* View Details Link - Lab 6 Requirement */
+.view-details {
+  display: inline-block;
+  color: var(--focus-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.view-details:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* Add to Cart Button */
+.add-cart-btn {
   background-color: var(--accent-color);
   color: var(--text-light);
   border: none;
-  padding: 12px 24px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
   border-radius: 6px;
   cursor: pointer;
+  width: 100%;
+  font-weight: 600;
 }
 
-/* Task 4: Checkout – Flexbox/Grid: fieldset + aside side-by-side on desktop only */
+/* ==========================================
+   TASK 4: Cart Styles with Flexbox
+   ========================================== */
+.Cart {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.Cart > h1 {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Empty cart styling using :empty pseudo-class (Lab 6) */
+.cart-items:empty {
+  display: block;
+  padding: 40px;
+  background-color: #ffeaa7;
+  border: 2px dashed var(--accent-color);
+  border-radius: 12px;
+  text-align: center;
+  color: var(--primary-color);
+  font-style: italic;
+}
+
+/* Cart List Items */
+#cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#cart-list li {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--text-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  animation: slideUp 0.5s ease-out;
+}
+
+#cart-list li img {
+  width: 80px;
+  min-width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+#cart-list li h3 { 
+  flex: 1; 
+  min-width: 0; 
+  margin: 0; 
+  font-size: 1rem; 
+}
+
+#cart-list li .item-price {
+  font-weight: bold;
+  color: var(--primary-color);
+  white-space: nowrap;
+}
+
+#cart-list li input[type="number"] { 
+  width: 60px; 
+  padding: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  text-align: center;
+}
+
+#cart-list li .remove-btn {
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Subtotal Section */
+.subtotal-content {
+  margin-top: 24px;
+  padding: 20px;
+  background-color: var(--text-light);
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.subtotal-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.Proceed-btn {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.btn-secondary {
+  display: inline-block;
+  background-color: var(--bg-light);
+  color: var(--primary-color);
+  padding: 12px 24px;
+  border-radius: 6px;
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Empty Cart Message */
+.message {
+  text-align: center;
+  padding: 40px;
+  font-style: italic;
+  color: var(--text-main);
+}
+
+/* ==========================================
+   TASK 4: Checkout Layout (Flexbox/Grid)
+   ========================================== */
 .checkout-wrapper {
   padding: 24px;
   max-width: 1200px;
@@ -364,41 +478,101 @@ object-fit:contain;
   padding: 24px;
 }
 
+.checkout-process h1 {
+  margin-bottom: 20px;
+}
+
 .checkout-process fieldset {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 24px;
+  margin-bottom: 20px;
 }
 
-.checkout-process input {
-  width: 95%;
-  margin-bottom: 12px;
+.checkout-process legend {
+  font-weight: bold;
+  padding: 0 10px;
+  color: var(--primary-color);
+}
+
+/* Form Group for Label + Input + Error */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.checkout-process input[type="text"],
+.checkout-process input[type="email"],
+.checkout-process input[type="tel"] {
+  width: 100%;
   padding: 10px;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Required and Valid Input Styling (Lab 6) */
+input:required {
+  border: 2px solid var(--primary-color);
+}
+
+input:valid {
+  border-color: var(--success-color);
+  background-color: #e8f8f5;
+}
+
+/* Error State - Applied via JS (Lab 6) */
+input.error {
+  border-color: var(--error-color) !important;
+  background-color: #fdecea;
+}
+
+/* Error Message Span (Lab 6) */
+.error-message {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: none;
+}
+
+input.error + .error-message {
   display: block;
 }
 
-.checkout-process input[type="submit"] {
-  background-color: var(--accent-color);
-  color: var(--text-light);
-  border: none;
-  padding: 12px 24px;
+/* Two Column Layout for City/ZIP */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Payment Options */
+.payment-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.checkout-process input[type="radio"] {
+.payment-option:hover {
+  background-color: var(--bg-light);
+}
+
+.payment-option input[type="radio"] {
   width: auto;
-  display: inline-block;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
-.checkout-process .payment-option {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-
+/* Order Summary Sidebar */
 .checkout-order-summary {
   padding: 24px;
   border: 1px solid var(--border-color);
@@ -407,70 +581,160 @@ object-fit:contain;
   margin-top: 24px;
 }
 
-/* Task 4: Cart – Flexbox row per item, card design */
-.Cart {
+.checkout-order-summary h2 {
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.order-total {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid var(--border-color);
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* ==========================================
+   TASK 5: Tables & Details Page
+   ========================================== */
+main {
   padding: 24px;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.Cart ul { padding: 0; margin: 0; }
-
-.Cart .cart-items li {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  margin: 12px 0;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  background-color: var(--text-light);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.Cart .cart-items li img {
-  width: 80px;
-  min-width: 80px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.Cart .cart-items li h3 { flex: 1; min-width: 0; margin: 0; font-size: 1rem; }
-.Cart .cart-items li span { white-space: nowrap; }
-.Cart .cart-items li input[type="number"] { width: 60px; padding: 6px; }
-
-/* Proceed button */
-.Proceed-btn {
-  display: inline-block;
-  background-color: var(--accent-color);
-  color: var(--text-light);
-  padding: 12px 24px;
-  border-radius: 6px;
-}
-
-/* Main container */
-main { padding: 24px; max-width: 1200px; margin: 0 auto; }
-
-/* Task 5: Responsive table – prevent horizontal scroll on mobile */
+/* Responsive Table Wrapper */
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin: 20px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
-.table-wrap table {
+table {
+  width: 100%;
+  border-collapse: collapse;
   min-width: 280px;
 }
 
-/* Task 6: Products page – aside above grid on mobile; desktop: grid 20–25% aside */
-.products-page-layout {
-  display: block;
+table th,
+table td {
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  text-align: left;
 }
 
-.products-page-layout .filter-panel {
+table th {
+  font-weight: bold;
+  color: var(--primary-color);
+  background-color: #ecf0f1;
+  width: 30%;
+}
+
+/* Reviews Blockquote with ::before and ::after (Lab 6) */
+.reviews {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: var(--text-light);
+  border-radius: 8px;
+}
+
+.reviews h3 {
+  margin-bottom: 16px;
+}
+
+.reviews blockquote {
+  position: relative;
+  padding: 24px 32px;
+  margin: 20px 0;
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--accent-color);
+  font-style: italic;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Opening quote mark using ::before */
+.reviews blockquote::before {
+  content: "\201C";
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-size: 48px;
+  color: var(--accent-color);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+/* Closing quote mark using ::after */
+.reviews blockquote::after {
+  content: "\201D";
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 48px;
+  color: var(--accent-color);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.reviews blockquote footer {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Product Details Specific */
+#product-details {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+#product-details h1 {
+  margin-bottom: 20px;
+}
+
+#product-details .img-product {
+  max-width: 400px;
+  margin: 0 auto 20px;
+}
+
+#product-details .price {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+#add-to-cart-form {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: var(--text-light);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+#add-to-cart-form h3 {
+  margin-bottom: 16px;
+}
+
+/* ==========================================
+   TASK 6: Products Page Layout with Aside
+   ========================================== */
+.products-page-layout {
+  display: block;
+  padding: 20px;
+}
+
+.filter-panel {
   margin-bottom: 24px;
 }
 
@@ -478,9 +742,143 @@ main { padding: 24px; max-width: 1200px; margin: 0 auto; }
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 16px;
+  background-color: var(--text-light);
 }
 
-/* Task 7: Keyframes and animations */
+.filter-panel legend {
+  font-weight: bold;
+  padding: 0 10px;
+  color: var(--primary-color);
+}
+
+.filter-panel h3 {
+  margin: 16px 0 8px 0;
+  font-size: 1rem;
+}
+
+.filter-panel label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.filter-panel input[type="checkbox"],
+.filter-panel input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* ==========================================
+   TASK 5 & 7: Account Page & Animations
+   ========================================== */
+.account-greeting {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Order History with details/summary (Lab 6) */
+#orders-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.order-card {
+  background-color: var(--text-light);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.order-card summary {
+  padding: 16px 20px;
+  cursor: pointer;
+  background-color: var(--bg-light);
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.order-card summary:hover {
+  background-color: #e9ecef;
+}
+
+/* Custom marker styling */
+.order-card summary::marker {
+  color: var(--accent-color);
+  font-size: 1.2em;
+}
+
+.order-card summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Dropdown indicator */
+.order-card summary::after {
+  content: "▼";
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.order-card[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.order-details {
+  padding: 16px 20px;
+}
+
+.order-details .item-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.order-details .total-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 2px solid var(--border-color);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Thank You Page */
+.thankyou-page {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.success-animation {
+  width: 80px;
+  height: 80px;
+  background-color: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin: 0 auto 24px;
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================
+   TASK 7: Keyframes and Animations (Lab 6)
+   ========================================== */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -508,52 +906,53 @@ main { padding: 24px; max-width: 1200px; margin: 0 auto; }
   60% { transform: translateY(-4px); }
 }
 
-/* Product cards: fade-in on load */
-.products .product-card,
-.product-grid .product-card {
+/* Product cards fade-in on load */
+.product-card {
   animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
 }
 
-.product-grid .product-card:nth-child(1) { animation-delay: 0.05s; }
-.product-grid .product-card:nth-child(2) { animation-delay: 0.1s; }
-.product-grid .product-card:nth-child(3) { animation-delay: 0.15s; }
-.product-grid .product-card:nth-child(4) { animation-delay: 0.2s; }
-.products .product-card { animation-delay: 0.1s; }
+.product-card:nth-child(1) { animation-delay: 0.05s; }
+.product-card:nth-child(2) { animation-delay: 0.1s; }
+.product-card:nth-child(3) { animation-delay: 0.15s; }
+.product-card:nth-child(4) { animation-delay: 0.2s; }
+.product-card:nth-child(5) { animation-delay: 0.25s; }
+.product-card:nth-child(6) { animation-delay: 0.3s; }
 
-/* Add to Cart button: pulse on hover */
-.product-card .add-cart-btn,
-input[type="button"][value="Add to cart"],
-button.add-cart-btn {
-  animation: none;
-}
-
-.product-card .add-cart-btn:hover,
-input[type="button"][value="Add to cart"]:hover,
-button.add-cart-btn:hover {
+/* Pulse animation on add to cart button hover */
+.add-cart-btn:hover {
   animation: pulse 0.6s ease-in-out;
 }
 
-/* Hero text: slide-in */
-.hero-banner h1,
-.hero-banner p {
+/* Hero text slide-in animation */
+.hero-banner h1 {
   animation: slideUp 0.7s ease-out forwards;
+  opacity: 0;
 }
 
-.hero-banner p { animation-delay: 0.15s; }
+.hero-banner p {
+  animation: slideUp 0.7s ease-out 0.15s forwards;
+  opacity: 0;
+}
+
 .hero-banner button {
   opacity: 0;
   animation: slideUp 0.7s ease-out 0.25s both;
 }
 
-/* Bounce on Add to Cart click – add .bounce-me via JS */
-.product-card.bounce-me,
+/* Bounce animation class - added via JS when adding to cart */
 .bounce-me {
   animation: bounce 0.5s ease-out;
 }
 
+/* Utility animation class */
 .fade-in {
   animation: fadeIn 0.4s ease-in-out;
 }
+
+/* ==========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================== */
 
 /* TABLET: min-width 481px */
 @media (min-width: 481px) {
@@ -561,11 +960,11 @@ button.add-cart-btn:hover {
   .products {
     grid-template-columns: repeat(2, 1fr);
   }
-
 }
 
-/*  DESKTOP: min-width 769px */
+/* DESKTOP: min-width 769px */
 @media (min-width: 769px) {
+  /* Header horizontal layout */
   header {
     flex-direction: row;
     justify-content: space-between;
@@ -576,39 +975,61 @@ button.add-cart-btn:hover {
     flex-direction: row;
     justify-content: flex-end;
     width: auto;
-    backdrop-filter: blur(50px);
   }
 
-  #logo, .header-logo {
+  .logo-container {
     margin-bottom: 0;
   }
 
+  /* 4-column product grid */
   .product-grid,
   .products {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
   }
 
+  /* Products page with sidebar */
   .products-page-layout {
     display: grid;
-    grid-template-columns: 22% 1fr;
-    gap: 24px;
+    grid-template-columns: 250px 1fr;
+    gap: 32px;
     align-items: start;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
   }
 
-  .products-page-layout .filter-panel {
+  .filter-panel {
     margin-bottom: 0;
     position: sticky;
     top: 24px;
   }
 
+  /* Checkout 2-column layout */
   .checkout-wrapper {
     display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 32px;
+    grid-template-columns: 1fr 350px;
+    gap: 40px;
     align-items: start;
   }
 
   .checkout-order-summary {
     margin-top: 0;
+    position: sticky;
+    top: 24px;
+  }
+  
+  /* Larger screens - 4 columns */
+  .product-grid,
+  .products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1024px) {
+  .product-grid,
+  .products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
