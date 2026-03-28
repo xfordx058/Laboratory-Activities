@@ -770,82 +770,259 @@ table th {
 /* ==========================================
    TASK 5 & 7: Account Page & Animations
    ========================================== */
-.account-greeting {
-  text-align: center;
-  margin-bottom: 30px;
+/* ==========================================
+   Account Page Styles - Additional for Lab 6
+   ========================================== */
+
+.account-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* Order History with details/summary (Lab 6) */
-#orders-container {
-  max-width: 800px;
-  margin: 0 auto;
+/* Account Header with Avatar */
+.account-header {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: var(--text-light);
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 16px;
+}
+
+.account-header h1 {
+    margin-bottom: 8px;
+    font-size: 1.8rem;
+}
+
+.member-since {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Account Stats Grid */
+.account-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background-color: var(--text-light);
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card h3 {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 12px;
+    font-family: "Segoe UI", sans-serif;
+    font-weight: 600;
+}
+
+.stat-card p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin: 0;
+}
+
+/* Account Sections */
+.account-section {
+    margin-bottom: 40px;
+}
+
+.account-section h2 {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Settings Grid */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.setting-card {
+    background-color: var(--text-light);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+.setting-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.setting-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.setting-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+/* Logout Section */
+.logout-section {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Order History - details/summary styling (Lab 6) */
 .order-card {
-  background-color: var(--text-light);
-  border-radius: 8px;
-  margin-bottom: 16px;
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background-color: var(--text-light);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.5s ease-out;
 }
 
 .order-card summary {
-  padding: 16px 20px;
-  cursor: pointer;
-  background-color: var(--bg-light);
-  font-weight: 600;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background-color 0.3s ease;
+    padding: 20px;
+    cursor: pointer;
+    background-color: var(--bg-light);
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
 
 .order-card summary:hover {
-  background-color: #e9ecef;
+    background-color: #e9ecef;
 }
 
-/* Custom marker styling */
-.order-card summary::marker {
-  color: var(--accent-color);
-  font-size: 1.2em;
-}
-
+/* Hide default marker */
 .order-card summary::-webkit-details-marker {
-  display: none;
+    display: none;
 }
 
-/* Dropdown indicator */
+/* Custom dropdown arrow */
 .order-card summary::after {
-  content: "▼";
-  font-size: 0.8rem;
-  transition: transform 0.3s ease;
+    content: "▼";
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
 }
 
 .order-card[open] summary::after {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
+/* Order header info layout */
+.order-header-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.order-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-delivered {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-processing {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-shipped {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+/* Order details content */
 .order-details {
-  padding: 16px 20px;
+    padding: 20px;
+    background-color: #fafafa;
 }
 
-.order-details .item-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
+.order-item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
 }
 
-.order-details .total-row {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 12px;
-  margin-top: 12px;
-  border-top: 2px solid var(--border-color);
-  font-weight: bold;
-  font-size: 1.1rem;
+.order-item-row:last-child {
+    border-bottom: none;
+}
+
+.order-total-row {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 2px solid var(--border-color);
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .account-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .order-header-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
 }
 
 /* Thank You Page */

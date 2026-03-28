@@ -1,11 +1,11 @@
-
+<!-- account.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account - iPhone Shop</title>
-    <link rel="stylesheet" href="css(lab2)/style.css" />
+    <link rel="stylesheet" href="css(lab2)/style.css">
 </head>
 <body>
     <header>
@@ -24,8 +24,14 @@
         </div>
     </header>
 
-    <main>
-        <h1 class="account-greeting" id="user-greeting">Welcome!</h1>
+    <main class="account-page">
+        
+        <section class="account-header">
+            <div class="user-avatar"></div>
+            <h1 id="user-greeting">Welcome back!</h1>
+            <p class="member-since">Member since 2024</p>
+        </section>
+
         
         <section class="account-stats">
             <div class="stat-card">
@@ -33,14 +39,52 @@
                 <p id="total-orders">0</p>
             </div>
             <div class="stat-card">
-                <h3>Member Since</h3>
-                <p>2026</p>
+                <h3>Wishlist Items</h3>
+                <p id="wishlist-count">3</p>
+            </div>
+            <div class="stat-card">
+                <h3>Reward Points</h3>
+                <p id="reward-points">1,250</p>
             </div>
         </section>
 
-        <section id="purchase-history">
+       
+        <section class="account-section">
             <h2>Order History</h2>
-            <div id="orders-container"></div>
+            <div id="orders-container">
+                <!-- Orders injected dynamically by JavaScript -->
+            </div>
+        </section>
+
+        
+        <section class="account-section">
+            <h2>Account Settings</h2>
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <h3>Personal Information</h3>
+                    <p>Update your profile details and preferences</p>
+                    <button class="add-cart-btn" style="width: 100%;">Edit Profile</button>
+                </div>
+                <div class="setting-card">
+                    <h3>Address Book</h3>
+                    <p>Manage shipping and billing addresses</p>
+                    <button class="add-cart-btn" style="width: 100%;">Manage Addresses</button>
+                </div>
+                <div class="setting-card">
+                    <h3>Payment Methods</h3>
+                    <p>Manage your credit cards and payment options</p>
+                    <button class="add-cart-btn" style="width: 100%;">View Cards</button>
+                </div>
+                <div class="setting-card">
+                    <h3>Security</h3>
+                    <p>Change password and security settings</p>
+                    <button class="add-cart-btn" style="width: 100%;">Security Settings</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="account-section logout-section">
+            <button id="logout-btn" class="btn-secondary" style="width: 100%; max-width: 300px;">Logout</button>
         </section>
     </main>
 
