@@ -1,14 +1,11 @@
 package com.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Product entity representing items available for sale.
- * Mapped to the 'products' table in the database.
- */
 @Entity
 @Table(name = "products")
 @Data
@@ -32,13 +29,11 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
     
+    @Column(name = "image_url")
     private String imageUrl;
     
-    /**
-     * Many products belong to one category.
-     * This is the child side of the relationship.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties({"products", "hibernateLazyInitializer"}) // Prevent loop + lazy loading error
     private Category category;
 }

@@ -1,14 +1,11 @@
-package com.ecommerce.model.model;
+package com.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * OrderItem entity representing a single item within an order.
- * Many OrderItems belong to one Order.
- */
 @Entity
 @Table(name = "order_items")
 @Data
@@ -22,15 +19,17 @@ public class OrderItem {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonIgnoreProperties({"orderItems", "hibernateLazyInitializer"})
     private Order order;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnoreProperties({"category", "hibernateLazyInitializer"})
     private Product product;
     
     @Column(nullable = false)
     private Integer quantity;
     
-    @Column(nullable = false)
+    @Column(name = "unit_price", nullable = false)
     private Double unitPrice;
 }
