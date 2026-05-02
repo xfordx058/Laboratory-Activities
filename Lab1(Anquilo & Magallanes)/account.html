@@ -25,12 +25,14 @@
     </header>
 
     <main class="account-page">
-        
         <section class="account-header">
-            <div class="user-avatar"></div>
-            <h1 id="user-greeting">Welcome back!</h1>
-            <p id="page-status" class="auth-status"></p>
-            <p class="member-since">Member since 2024</p>
+            <div class="user-avatar" aria-hidden="true"></div>
+            <div class="account-title">
+                <h1 id="user-greeting">Welcome back!</h1>
+                <p id="page-status" class="auth-status"></p>
+                <p class="member-since">Session protected customer profile</p>
+            </div>
+            <a href="products.html" class="account-cta">Shop Products</a>
         </section>
 
         
@@ -51,9 +53,15 @@
 
        
         <section class="account-section">
-            <h2>Order History</h2>
+            <div class="section-heading-row">
+                <h2>Order History</h2>
+                <a href="Cart.html">View Cart</a>
+            </div>
             <div id="orders-container">
-                <!-- Orders injected dynamically by JavaScript -->
+                <div class="empty-account-state">
+                    <h3>No recent orders</h3>
+                    <p>Completed checkouts will appear here after you place an order.</p>
+                </div>
             </div>
         </section>
 
@@ -64,28 +72,28 @@
                 <div class="setting-card">
                     <h3>Personal Information</h3>
                     <p>Update your profile details and preferences</p>
-                    <button class="add-cart-btn" style="width: 100%;">Edit Profile</button>
+                    <button class="account-action-btn">Edit Profile</button>
                 </div>
                 <div class="setting-card">
                     <h3>Address Book</h3>
                     <p>Manage shipping and billing addresses</p>
-                    <button class="add-cart-btn" style="width: 100%;">Manage Addresses</button>
+                    <button class="account-action-btn">Manage Addresses</button>
                 </div>
                 <div class="setting-card">
                     <h3>Payment Methods</h3>
                     <p>Manage your credit cards and payment options</p>
-                    <button class="add-cart-btn" style="width: 100%;">View Cards</button>
+                    <button class="account-action-btn">View Cards</button>
                 </div>
                 <div class="setting-card">
                     <h3>Security</h3>
                     <p>Change password and security settings</p>
-                    <button class="add-cart-btn" style="width: 100%;">Security Settings</button>
+                    <button class="account-action-btn">Security Settings</button>
                 </div>
             </div>
         </section>
 
         <section class="account-section logout-section">
-            <button id="logout-btn" class="btn-secondary" style="width: 100%; max-width: 300px;">Logout</button>
+            <button id="logout-btn" class="btn-secondary logout-btn">Logout</button>
         </section>
     </main>
 

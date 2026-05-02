@@ -8,48 +8,61 @@
 </head>
 <body>
     <header>
-       <div class="logo-container">
-<img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
-</div>
-      <div class="nav-wrap">
-        <nav class="navs">
-          <ul class="nav-li">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="Cart.html">Cart</a></li>
-            <li><a href="account.html">Profile</a></li>
-          </ul>
-        </nav>
-      </div>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <section class="signup-form">
-        <fieldset>
-            <legend>Sign Up</legend>
+    <main class="auth-page">
+        <section class="auth-card">
+            <div class="auth-card-header">
+                <h1>Create Account</h1>
+                <p>Register a customer or seller account for secure session-based access.</p>
+            </div>
             <p id="auth-status" class="auth-status"></p>
             <form id="register-form" action="#">
-                <label for="username">Username:</label><br>
-                <input id="username" type="text" name="username" minlength="8" maxlength="20" placeholder="Enter your username" required><br><br>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" name="username" minlength="8" maxlength="20" autocomplete="username" placeholder="8 to 20 characters" required>
+                </div>
 
-                <label for="email">Email:</label><br>
-                <input id="email" type="email" name="email" placeholder="Enter your email" required><br><br>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email" autocomplete="email" placeholder="email@example.com" required>
+                </div>
 
-                <label for="password">Password:</label><br>
-                <input id="password" type="password" name="password" minlength="8" maxlength="72" placeholder="Enter your password" required><br><br>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password" minlength="8" maxlength="72" autocomplete="new-password" placeholder="At least 8 characters" required>
+                </div>
 
-                <label for="confirm-password">Confirm Password:</label><br>
-                <input id="confirm-password" type="password" name="confirmPassword" minlength="8" maxlength="72" placeholder="Confirm your password" required><br><br>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input id="confirm-password" type="password" name="confirmPassword" minlength="8" maxlength="72" autocomplete="new-password" placeholder="Repeat your password" required>
+                </div>
 
-                <label for="role">Account Type:</label><br>
-                <select id="role" name="role">
-                    <option value="CUSTOMER">Customer</option>
-                    <option value="SELLER">Seller</option>
-                </select><br><br>
+                <div class="form-group">
+                    <label for="role">Account Type</label>
+                    <select id="role" name="role">
+                        <option value="CUSTOMER">Customer</option>
+                        <option value="SELLER">Seller</option>
+                    </select>
+                </div>
 
-                <input type="submit" value="Sign Up">
+                <button type="submit" class="auth-submit">Sign Up</button>
             </form>
-            <p>Already have an account? <a href="login.html">Log in</a></p>
-        </fieldset>
-    </section>
+            <p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p>
+        </section>
+    </main>
     <script src="js/script.js"></script>
 </body>
 </html>

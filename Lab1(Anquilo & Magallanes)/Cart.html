@@ -23,24 +23,34 @@
         </div>
     </header>
 
-    <section class="Cart" id="cart-page">
-        <h1>Shopping Cart</h1>
-        
+    <main class="Cart" id="cart-page">
+        <div class="cart-header">
+            <div>
+                <h1>Shopping Cart</h1>
+                <p>Review your items before secure checkout.</p>
+            </div>
+            <a href="products.html" class="cart-header-link">Continue Shopping</a>
+        </div>
+
         <div id="cart-content">
             <ul id="cart-list" class="cart-items"></ul>
-            
+
             <section class="subtotal-content">
-                <span class="subtotal-price" id="subtotal-price">Subtotal: ₱0.00</span><br>
-                <a href="checkout.html" class="Proceed-btn">Proceed to Checkout</a>
-                <button id="clear-cart" class="btn-secondary">Clear Cart</button>
+                <span class="subtotal-label">Order Summary</span>
+                <span class="subtotal-price" id="subtotal-price">Subtotal: PHP 0.00</span>
+                <div class="cart-actions">
+                    <a href="checkout.html" class="Proceed-btn">Proceed to Checkout</a>
+                    <button id="clear-cart" class="btn-secondary">Clear Cart</button>
+                </div>
             </section>
         </div>
 
         <section class="message" id="empty-cart-message" style="display: none;">
-            <p>"Your Cart is Currently Empty"</p>
+            <h2>Your cart is empty</h2>
+            <p>Add a phone to your cart before checkout.</p>
             <a href="products.html" class="Proceed-btn">Continue Shopping</a>
         </section>
-    </section>
+    </main>
 
     <script src="js/script.js"></script>
 </body>

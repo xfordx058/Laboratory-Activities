@@ -244,18 +244,22 @@ async function renderCart() {
     cartList.innerHTML = cart.map(item => `
         <li class="cart-item" data-id="${item.id}">
             <div class="item-image">
-                <img src="${item.product.imageUrl || 'images/placeholder.jpg'}" alt="${item.product.name}">
+                <img src="${getProductImage(item.product)}" alt="${item.product.name}" onerror="this.src='images/placeholder.jpg'">
             </div>
             <div class="item-info">
                 <h3>${item.product.name}</h3>
-                <p class="price">PHP ${item.unitPrice.toFixed(2)}</p>
+                <p class="cart-item-meta">Unit price</p>
+                <p class="price">${formatPrice(item.unitPrice)}</p>
             </div>
             <div class="item-quantity">
                 <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
                 <span>${item.quantity}</span>
                 <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
             </div>
-            <p class="item-total">PHP ${(item.unitPrice * item.quantity).toFixed(2)}</p>
+            <div class="item-total">
+                <span>Item total</span>
+                <strong>${formatPrice(item.unitPrice * item.quantity)}</strong>
+            </div>
             <button onclick="removeFromCart(${item.id})" class="btn-remove">Remove</button>
         </li>
     `).join('');
@@ -267,7 +271,7 @@ async function renderCart() {
 function updateCartSummary(total) {
     const subtotalEl = document.getElementById('subtotal-price');
     if (subtotalEl) {
-        subtotalEl.textContent = `Subtotal: PHP ${total.toFixed(2)}`;
+        subtotalEl.textContent = `Subtotal: ${formatPrice(total)}`;
     }
 }
 
@@ -283,11 +287,7 @@ async function fetchProducts() {
     }
 }
 
-function renderProducts(products) {
-    const container = document.getElementById('product-list')
-        || document.querySelector('.product-grid')
-        || document.querySelector('main');
-
+function renderProductCards(products, container) {
     if (!container) return;
 
     if (!products || products.length === 0) {
@@ -296,20 +296,177 @@ function renderProducts(products) {
     }
 
     container.innerHTML = products.map(product => `
-        <div class="product-card" data-id="${product.id}">
-            <img src="${product.imageUrl || 'images/placeholder.jpg'}"
+        <div class="product-card ${isDiscountedProduct(product) ? 'discounted-card' : ''}" data-id="${product.id}">
+            ${isDiscountedProduct(product) ? '<span class="sale-badge">Sale</span>' : ''}
+            <img src="${getProductImage(product)}"
                  alt="${product.name}"
                  onerror="this.src='images/placeholder.jpg'">
             <h3>${product.name}</h3>
-            <p class="price">PHP ${product.price ? product.price.toFixed(2) : '0.00'}</p>
+            ${renderPrice(product)}
             <p class="stock">Stock: ${product.stock || 0}</p>
             <p class="description">${product.description || ''}</p>
-            <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}')" class="btn-cart">
-                Add to Cart
-            </button>
-            <button onclick="viewDetails(${product.id})" class="btn-details">Details</button>
+            <div class="product-actions">
+                <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}')" class="btn-cart">
+                    Add to Cart
+                </button>
+                <button onclick="viewDetails(${product.id})" class="btn-details">Details</button>
+            </div>
         </div>
     `).join('');
+}
+
+function renderProducts(products) {
+    const container = document.getElementById('product-list')
+        || document.getElementById('product-container')
+        || document.querySelector('.product-grid')
+        || document.querySelector('main');
+
+    renderProductCards(products, container);
+}
+
+function isDiscountedProduct(product) {
+    const categoryName = product.category?.name?.toLowerCase() || '';
+    const description = product.description?.toLowerCase() || '';
+    return categoryName.includes('discount') || description.includes('discount');
+}
+
+function formatPrice(value) {
+    return `PHP ${Number(value || 0).toFixed(2)}`;
+}
+
+function getProductImage(product) {
+    const imageUrl = product.imageUrl || 'images/placeholder.jpg';
+    return imageUrl.includes('/') ? imageUrl : `images/${imageUrl}`;
+}
+
+function getOriginalPrice(product) {
+    return Math.ceil((Number(product.price || 0) * 1.2) / 10) * 10;
+}
+
+function renderPrice(product) {
+    if (!isDiscountedProduct(product)) {
+        return `<p class="price current-price">${formatPrice(product.price)}</p>`;
+    }
+
+    return `
+        <div class="price-stack">
+            <del class="original-price">${formatPrice(getOriginalPrice(product))}</del>
+            <p class="price discounted-price">${formatPrice(product.price)}</p>
+        </div>
+    `;
+}
+
+function getProductSpecs(product) {
+    const name = product.name?.toLowerCase() || '';
+    const category = product.category?.name || 'Smartphone';
+    const seriesMatch = product.name?.match(/\b(13|14|15|16|17|S23|A23|M53|Note5)\b/i);
+
+    return [
+        ['Model', product.name || 'Mobile Device'],
+        ['Series', seriesMatch ? seriesMatch[0].toUpperCase() : category],
+        ['Category', category],
+        ['Storage', name.includes('512') ? '512GB' : name.includes('256') ? '256GB' : '128GB'],
+        ['Connectivity', name.includes('5g') || name.includes('s23') || name.includes('m53') || name.includes('a23') ? '5G ready' : '4G LTE'],
+        ['Warranty', '1 year service warranty'],
+        ['Stock', `${product.stock || 0} units available`]
+    ];
+}
+
+function renderSpecs(product) {
+    const table = document.getElementById('specs-table');
+    if (!table) return;
+
+    table.innerHTML = getProductSpecs(product).map(([label, value]) => `
+        <tr>
+            <th>${label}</th>
+            <td>${value}</td>
+        </tr>
+    `).join('');
+}
+
+function renderReviews(product) {
+    const reviews = document.getElementById('product-reviews');
+    if (!reviews) return;
+
+    const productName = product.name || 'this product';
+    const reviewData = [
+        [`${productName} arrived in excellent condition and matched the listed specifications.`, 'Verified Customer'],
+        ['Good value for the price, with smooth performance for daily use.', 'Mobile Shopper'],
+        ['Checkout was easy and the product details helped me choose confidently.', 'Repeat Buyer']
+    ];
+
+    reviews.innerHTML = reviewData.map(([quote, author]) => `
+        <blockquote>
+            <p>${quote}</p>
+            <footer>- <cite>${author}</cite></footer>
+        </blockquote>
+    `).join('');
+}
+
+function renderHomeProducts(products) {
+    const featuredContainer = document.getElementById('featured-container');
+    const discountedContainer = document.getElementById('discounted-container');
+
+    if (!featuredContainer && !discountedContainer) {
+        renderProducts(products);
+        return;
+    }
+
+    const discountedProducts = products.filter(isDiscountedProduct);
+    const featuredProducts = products.filter(product => !isDiscountedProduct(product));
+
+    renderProductCards(featuredProducts.slice(0, 8), featuredContainer);
+    renderProductCards(discountedProducts.slice(0, 8), discountedContainer);
+}
+
+function productSearchText(product) {
+    return [
+        product.name,
+        product.description,
+        product.category?.name
+    ].filter(Boolean).join(' ').toLowerCase();
+}
+
+function matchesSeries(product, selectedSeries) {
+    if (selectedSeries.length === 0) return true;
+
+    const text = productSearchText(product);
+    return selectedSeries.some(series => text.includes(series));
+}
+
+function matchesStorage(product, selectedStorage) {
+    if (!selectedStorage || selectedStorage === 'all') return true;
+
+    const text = productSearchText(product);
+    return text.includes(`${selectedStorage}gb`) || text.includes(`${selectedStorage} gb`);
+}
+
+function applyProductFilters(products) {
+    const filterForm = document.getElementById('filter-form');
+    if (!filterForm) return products;
+
+    const selectedSeries = Array.from(filterForm.querySelectorAll('input[name="series"]:checked'))
+        .map(input => input.value);
+    const selectedStorage = filterForm.querySelector('input[name="storage"]:checked')?.value || 'all';
+
+    return products.filter(product =>
+        matchesSeries(product, selectedSeries) && matchesStorage(product, selectedStorage)
+    );
+}
+
+function setupProductFilters(products) {
+    const filterForm = document.getElementById('filter-form');
+    if (!filterForm) {
+        renderProducts(products);
+        return;
+    }
+
+    const renderFilteredProducts = () => {
+        renderProducts(applyProductFilters(products));
+    };
+
+    filterForm.addEventListener('change', renderFilteredProducts);
+    renderFilteredProducts();
 }
 
 function viewDetails(productId) {
@@ -323,17 +480,29 @@ async function loadProductDetails(productId) {
     if (!container || !product) return;
 
     container.innerHTML = `
-        <div class="product-detail">
-            <img src="${product.imageUrl || 'images/placeholder.jpg'}" alt="${product.name}">
-            <h1>${product.name}</h1>
-            <p class="price">PHP ${product.price.toFixed(2)}</p>
-            <p class="stock">${product.stock} in stock</p>
-            <p class="description">${product.description || 'No description'}</p>
-            <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}')" class="btn-cart">
-                Add to Cart
-            </button>
+        <div class="product-detail ${isDiscountedProduct(product) ? 'discounted-detail' : ''}">
+            <div class="product-detail-media">
+                ${isDiscountedProduct(product) ? '<span class="sale-badge">Sale</span>' : ''}
+                <img src="${getProductImage(product)}" alt="${product.name}" onerror="this.src='images/placeholder.jpg'">
+            </div>
+            <div class="product-detail-info">
+                <p class="detail-category">${product.category?.name || 'Smartphone'}</p>
+                <h1>${product.name}</h1>
+                ${renderPrice(product)}
+                <p class="stock">${product.stock} in stock</p>
+                <p class="description">${product.description || 'No description'}</p>
+                <div class="product-actions detail-actions">
+                    <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}')" class="btn-cart">
+                        Add to Cart
+                    </button>
+                    <button onclick="window.location.href='products.html'" class="btn-details">Browse Products</button>
+                </div>
+            </div>
         </div>
     `;
+
+    renderSpecs(product);
+    renderReviews(product);
 }
 
 async function fetchProductById(id) {
@@ -513,10 +682,19 @@ function renderOrderSummary(cartItems) {
     if (!orderItems || !orderTotal) return;
 
     const total = cartItems.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
-    orderItems.innerHTML = cartItems.map(item => `
-        <p>${item.product.name} x ${item.quantity} - PHP ${(item.unitPrice * item.quantity).toFixed(2)}</p>
-    `).join('');
-    orderTotal.textContent = `PHP ${total.toFixed(2)}`;
+    orderItems.innerHTML = cartItems.length === 0
+        ? '<p class="empty">No items in cart.</p>'
+        : cartItems.map(item => `
+            <div class="summary-item">
+                <img src="${getProductImage(item.product)}" alt="${item.product.name}" onerror="this.src='images/placeholder.jpg'">
+                <div>
+                    <h3>${item.product.name}</h3>
+                    <p>Qty ${item.quantity} x ${formatPrice(item.unitPrice)}</p>
+                </div>
+                <strong>${formatPrice(item.unitPrice * item.quantity)}</strong>
+            </div>
+        `).join('');
+    orderTotal.textContent = formatPrice(total);
 }
 
 async function showApiError(response, fallbackMessage) {
@@ -552,9 +730,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateCartCount();
     }
 
-    if (path.includes('index') || path.includes('products') || path === '/' || path.endsWith('/index.html')) {
+    if (path.includes('index') || path === '/' || path.endsWith('/index.html')) {
         const products = await fetchProducts();
-        renderProducts(products);
+        renderHomeProducts(products);
+    } else if (path.includes('products')) {
+        const products = await fetchProducts();
+        setupProductFilters(products);
     } else if (path.includes('cart')) {
         await renderCart();
         const clearBtn = document.getElementById('clear-cart');
