@@ -1,6 +1,9 @@
 package com.ecommerce.services;
 
+import com.ecommerce.dto.ProductRequestDto;
+import com.ecommerce.model.Category;
 import com.ecommerce.model.Product;
+import com.ecommerce.repositories.CategoryRepository;
 import com.ecommerce.repositories.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import java.util.List;
 public class ProductService {
     
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
     
     @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
@@ -31,21 +35,15 @@ public class ProductService {
             .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
     }
     
-    public Product createProduct(Product product) {
+    public Product createProduct(ProductRequestDto request) {
+        Product product = new Product();
+        applyRequest(product, request);
         return productRepository.save(product);
     }
     
-    public Product updateProduct(Long id, Product productDetails) {
+    public Product updateProduct(Long id, ProductRequestDto productDetails) {
         Product product = getProductById(id);
-        product.setName(productDetails.getName());
-        product.setDescription(productDetails.getDescription());
-        product.setPrice(productDetails.getPrice());
-        product.setStock(productDetails.getStock());
-        product.setImageUrl(productDetails.getImageUrl());
-        // Handle category update if needed
-        if (productDetails.getCategory() != null) {
-            product.setCategory(productDetails.getCategory());
-        }
+        applyRequest(product, productDetails);
         return productRepository.save(product);
     }
     
@@ -62,5 +60,21 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<Product> getProductsByPriceRange(Double min, Double max) {
         return productRepository.findByPriceRange(min, max);
+    }
+
+    private void applyRequest(Product product, ProductRequestDto request) {
+        product.setName(request.name());
+        product.setDescription(request.description());
+        product.setPrice(request.price());
+        product.setStock(request.stock());
+        product.setImageUrl(request.imageUrl());
+
+        if (request.categoryId() != null) {
+            Category category = categoryRepository.findById(request.categoryId())
+                    .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + request.categoryId()));
+            product.setCategory(category);
+        } else {
+            product.setCategory(null);
+        }
     }
 }

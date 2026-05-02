@@ -1,8 +1,11 @@
 package com.ecommerce.controllers;
 
+import com.ecommerce.dto.CartItemRequestDto;
+import com.ecommerce.dto.CartQuantityRequestDto;
 import com.ecommerce.model.Cart;
 import com.ecommerce.model.CartItem;
 import com.ecommerce.services.CartService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,12 +52,9 @@ public class CartController {
     @PostMapping("/{cartId}/add")
     public ResponseEntity<Map<String, Object>> addToCart(
             @PathVariable Long cartId,
-            @RequestBody Map<String, Object> request) {
+            @Valid @RequestBody CartItemRequestDto request) {
         
-        Long productId = ((Number) request.get("productId")).longValue();
-        Integer quantity = ((Number) request.get("quantity")).intValue();
-        
-        CartItem cartItem = cartService.addToCart(cartId, productId, quantity);
+        CartItem cartItem = cartService.addToCart(cartId, request.productId(), request.quantity());
         
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
@@ -82,11 +82,9 @@ public class CartController {
     public ResponseEntity<Map<String, Object>> updateQuantity(
             @PathVariable Long cartId,
             @PathVariable Long cartItemId,
-            @RequestBody Map<String, Object> request) {
+            @Valid @RequestBody CartQuantityRequestDto request) {
         
-        Integer newQuantity = ((Number) request.get("quantity")).intValue();
-        
-        CartItem cartItem = cartService.updateQuantity(cartId, cartItemId, newQuantity);
+        CartItem cartItem = cartService.updateQuantity(cartId, cartItemId, request.quantity());
         
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
