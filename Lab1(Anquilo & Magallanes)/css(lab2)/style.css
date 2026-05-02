@@ -545,6 +545,12 @@ input.error + .error-message {
   display: block;
 }
 
+.auth-status {
+  min-height: 1.5rem;
+  margin: 8px 0 16px;
+  font-weight: 600;
+}
+
 /* Two Column Layout for City/ZIP */
 .form-row {
   display: grid;

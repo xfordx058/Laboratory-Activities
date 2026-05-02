@@ -25,23 +25,31 @@
     <section class="signup-form">
         <fieldset>
             <legend>Sign Up</legend>
-            <form action="#">
+            <p id="auth-status" class="auth-status"></p>
+            <form id="register-form" action="#">
                 <label for="username">Username:</label><br>
-                <input type="text" name="username" placeholder="Enter your username" required><br><br>
+                <input id="username" type="text" name="username" minlength="8" maxlength="20" placeholder="Enter your username" required><br><br>
 
                 <label for="email">Email:</label><br>
-                <input type="email" name="email" placeholder="Enter your email" required><br><br>
+                <input id="email" type="email" name="email" placeholder="Enter your email" required><br><br>
 
                 <label for="password">Password:</label><br>
-                <input type="password" name="password" placeholder="Enter your password" required><br><br>
+                <input id="password" type="password" name="password" minlength="8" maxlength="72" placeholder="Enter your password" required><br><br>
 
                 <label for="confirm-password">Confirm Password:</label><br>
-                <input type="password" name="confirm-password" placeholder="Confirm your password" required><br><br>
+                <input id="confirm-password" type="password" name="confirmPassword" minlength="8" maxlength="72" placeholder="Confirm your password" required><br><br>
+
+                <label for="role">Account Type:</label><br>
+                <select id="role" name="role">
+                    <option value="CUSTOMER">Customer</option>
+                    <option value="SELLER">Seller</option>
+                </select><br><br>
 
                 <input type="submit" value="Sign Up">
             </form>
+            <p>Already have an account? <a href="login.html">Log in</a></p>
         </fieldset>
     </section>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

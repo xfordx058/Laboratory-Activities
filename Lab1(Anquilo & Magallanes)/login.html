@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - iPhone Shop</title>
+    <link rel="stylesheet" href="css(lab2)/style.css" />
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="signup.html">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="account-page">
+        <section class="account-section">
+            <h1>Login</h1>
+            <p id="auth-status" class="auth-status"></p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" required>
+                </div>
+
+                <button type="submit" class="add-cart-btn" style="width: 100%;">Login</button>
+            </form>
+            <p>Need an account? <a href="signup.html">Create one</a></p>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
