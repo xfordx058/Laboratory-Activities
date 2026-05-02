@@ -1,8 +1,9 @@
 // ============================================
 // BASE API URL - Spring Boot backend
 // ============================================
-const API_BASE_URL = 'http://localhost:8080/api';
-const BACKEND_BASE_URL = 'http://localhost:8080';
+const BACKEND_HOST = window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'localhost';
+const BACKEND_BASE_URL = `http://${BACKEND_HOST}:8080`;
+const API_BASE_URL = `${BACKEND_BASE_URL}/api`;
 
 let csrfToken = null;
 let csrfHeaderName = 'X-XSRF-TOKEN';
