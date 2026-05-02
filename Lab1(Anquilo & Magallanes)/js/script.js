@@ -545,7 +545,10 @@ function setupLoginForm() {
             const response = await fetch(`${BACKEND_BASE_URL}/login`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: { [csrfHeaderName]: csrfToken },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    [csrfHeaderName]: csrfToken
+                },
                 body: new URLSearchParams(formData)
             });
 
