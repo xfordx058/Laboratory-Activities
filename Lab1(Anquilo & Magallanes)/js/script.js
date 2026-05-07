@@ -5,8 +5,7 @@ const BACKEND_HOST = window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'l
 const BACKEND_BASE_URL = `http://${BACKEND_HOST}:8080`;
 const API_BASE_URL = `${BACKEND_BASE_URL}/api`;
 
-let csrfToken = null;
-let csrfHeaderName = 'X-XSRF-TOKEN';
+const LOGIN_REQUIRED_MESSAGE = 'Please log in to add to cart or order.';
 
 function isAuthPage() {
     const path = window.location.pathname.toLowerCase();
@@ -21,36 +20,11 @@ function showStatus(message, isError = false) {
     }
 }
 
-async function loadCsrfToken() {
-    const response = await fetch(`${API_BASE_URL}/auth/csrf`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: { 'Accept': 'application/json' }
-    });
-
-    if (!response.ok) {
-        throw new Error(`Unable to load CSRF token (${response.status})`);
-    }
-
-    const data = await response.json();
-    csrfToken = data.token;
-    csrfHeaderName = data.headerName || csrfHeaderName;
-    return csrfToken;
-}
-
 async function apiFetch(url, options = {}) {
-    const method = (options.method || 'GET').toUpperCase();
     const headers = {
         'Accept': 'application/json',
         ...(options.headers || {})
     };
-
-    if (method !== 'GET' && method !== 'HEAD') {
-        if (!csrfToken) {
-            await loadCsrfToken();
-        }
-        headers[csrfHeaderName] = csrfToken;
-    }
 
     const response = await fetch(url, {
         ...options,
@@ -94,25 +68,39 @@ function setCartId(cartId) {
     localStorage.setItem('cartId', cartId);
 }
 
-async function initializeCart() {
+function clearCartId() {
+    localStorage.removeItem('cartId');
+}
+
+async function initializeCart(forceCreate = false) {
     const sessionId = getSessionId();
     let cartId = getCartId();
 
-    if (!cartId) {
-        try {
-            const response = await apiFetch(`${API_BASE_URL}/cart/session/${sessionId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            if (response.ok) {
-                const cart = await response.json();
-                setCartId(cart.id);
-            }
-        } catch (error) {
-            console.error('Failed to initialize cart:', error.message);
-        }
+    if (cartId && !forceCreate) {
+        return cartId;
     }
+
+    try {
+        const response = await apiFetch(`${API_BASE_URL}/cart/session/${sessionId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) {
+            const cart = await response.json();
+            setCartId(cart.id);
+            return cart.id;
+        }
+    } catch (error) {
+        console.error('Failed to initialize cart:', error.message);
+    }
+
+    return null;
+}
+
+async function resetCartSession() {
+    clearCartId();
+    return await initializeCart(true);
 }
 
 async function getCart() {
@@ -124,6 +112,8 @@ async function getCart() {
         if (response.ok) {
             return await response.json();
         }
+
+        clearCartId();
     } catch (error) {
         console.error('Failed to fetch cart:', error.message);
     }
@@ -131,8 +121,19 @@ async function getCart() {
     return [];
 }
 
+async function postAddToCart(cartId, productId) {
+    return await apiFetch(`${API_BASE_URL}/cart/${cartId}/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, quantity: 1 })
+    });
+}
+
 async function addToCart(productId, productName) {
-    const cartId = getCartId();
+    const canUseCart = await requireAuthenticatedAction(LOGIN_REQUIRED_MESSAGE);
+    if (!canUseCart) return;
+
+    let cartId = await initializeCart();
 
     if (!cartId) {
         alert('Cart not initialized. Please refresh the page.');
@@ -140,11 +141,14 @@ async function addToCart(productId, productName) {
     }
 
     try {
-        const response = await apiFetch(`${API_BASE_URL}/cart/${cartId}/add`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId, quantity: 1 })
-        });
+        let response = await postAddToCart(cartId, productId);
+
+        if (!response.ok) {
+            cartId = await resetCartSession();
+            if (cartId) {
+                response = await postAddToCart(cartId, productId);
+            }
+        }
 
         if (response.ok) {
             updateCartCount();
@@ -206,6 +210,8 @@ async function getCartTotal() {
             const result = await response.json();
             return result.total || 0;
         }
+
+        clearCartId();
     } catch (error) {
         console.error('Error getting cart total:', error.message);
     }
@@ -355,6 +361,28 @@ function renderPrice(product) {
             <p class="price discounted-price">${formatPrice(product.price)}</p>
         </div>
     `;
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function formatOrderDate(value) {
+    if (!value) return 'Date unavailable';
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+
+    return date.toLocaleDateString('en-PH', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
 }
 
 function getProductSpecs(product) {
@@ -518,15 +546,35 @@ async function fetchProductById(id) {
 }
 
 async function getCurrentUser() {
-    const response = await apiFetch(`${API_BASE_URL}/auth/me`);
+    const response = await fetch(`${API_BASE_URL}/auth/me`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.status === 401 || response.status === 403) return null;
     if (!response.ok) return null;
     return await response.json();
 }
 
-async function protectPage() {
+async function requireAuthenticatedAction(message = LOGIN_REQUIRED_MESSAGE) {
+    const user = await getCurrentUser();
+    if (user) return true;
+
+    alert(message);
+    return false;
+}
+
+async function protectPage(message = 'Please log in to continue.') {
     try {
-        return await getCurrentUser();
+        const user = await getCurrentUser();
+        if (user) return user;
+
+        alert(message);
+        window.location.href = 'login.html';
+        return null;
     } catch (error) {
+        alert(message);
         window.location.href = 'login.html';
         return null;
     }
@@ -539,23 +587,20 @@ function setupLoginForm() {
     form.addEventListener('submit', async event => {
         event.preventDefault();
         const formData = new FormData(form);
-        await loadCsrfToken();
-        formData.append('_csrf', csrfToken);
 
         try {
             const response = await fetch(`${BACKEND_BASE_URL}/login`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    [csrfHeaderName]: csrfToken
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: new URLSearchParams(formData)
             });
 
             if (response.ok) {
                 showStatus('Login successful.');
-                window.location.href = 'account.html';
+                window.location.href = 'index.html';
                 return;
             }
 
@@ -609,7 +654,7 @@ function setupRegisterForm() {
 async function setupAccountPage() {
     if (!window.location.pathname.toLowerCase().includes('account')) return;
 
-    const user = await protectPage();
+    const user = await protectPage('Please log in to view your profile.');
     if (!user) return;
 
     const greeting = document.getElementById('user-greeting');
@@ -617,14 +662,14 @@ async function setupAccountPage() {
         greeting.textContent = `Welcome back, ${user.username}!`;
     }
 
+    await renderOrderHistory();
+
     const logoutButton = document.getElementById('logout-btn');
     if (logoutButton) {
         logoutButton.addEventListener('click', async () => {
-            await loadCsrfToken();
             const response = await fetch(`${BACKEND_BASE_URL}/logout`, {
                 method: 'POST',
-                credentials: 'include',
-                headers: { [csrfHeaderName]: csrfToken }
+                credentials: 'include'
             });
 
             if (response.ok) {
@@ -634,10 +679,282 @@ async function setupAccountPage() {
     }
 }
 
+async function fetchOrderHistory() {
+    const response = await apiFetch(`${API_BASE_URL}/orders/my`);
+    if (!response.ok) {
+        throw new Error(`Unable to load order history (${response.status})`);
+    }
+    return await response.json();
+}
+
+async function renderOrderHistory() {
+    const container = document.getElementById('orders-container');
+    const totalOrders = document.getElementById('total-orders');
+    if (!container) return;
+
+    container.innerHTML = '<div class="empty-account-state"><h3>Loading orders...</h3><p>Please wait while your order history loads.</p></div>';
+
+    try {
+        const orders = await fetchOrderHistory();
+        if (totalOrders) {
+            totalOrders.textContent = orders.length;
+        }
+
+        if (orders.length === 0) {
+            container.innerHTML = `
+                <div class="empty-account-state">
+                    <h3>No recent orders</h3>
+                    <p>Completed checkouts will appear here after you place an order.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = orders.map(order => {
+            const items = order.items || [];
+            const itemCount = items.reduce((sum, item) => sum + (item.quantity || 0), 0);
+
+            return `
+                <details class="order-card">
+                    <summary>
+                        <div class="order-header-info">
+                            <strong>Order #${order.id}</strong>
+                            <span>${formatOrderDate(order.orderDate)}</span>
+                            <span>${itemCount} item${itemCount === 1 ? '' : 's'}</span>
+                        </div>
+                        <span class="order-status">Completed</span>
+                    </summary>
+                    <div class="order-details">
+                        ${items.length === 0
+                            ? '<p class="empty">No items saved for this order.</p>'
+                            : items.map(item => `
+                                <div class="order-item-row">
+                                    <div>
+                                        <strong>${escapeHtml(item.productName || 'Product')}</strong>
+                                        <p>Qty ${item.quantity || 0} x ${formatPrice(item.unitPrice)}</p>
+                                    </div>
+                                    <span>${formatPrice(item.lineTotal)}</span>
+                                </div>
+                            `).join('')}
+                        <div class="order-total-row">
+                            <span>Total</span>
+                            <strong>${formatPrice(order.totalAmount)}</strong>
+                        </div>
+                    </div>
+                </details>
+            `;
+        }).join('');
+    } catch (error) {
+        console.error('Failed to render order history:', error.message);
+        container.innerHTML = `
+            <div class="empty-account-state error-state">
+                <h3>Unable to load orders</h3>
+                <p>${escapeHtml(error.message)}</p>
+            </div>
+        `;
+    }
+}
+
+function hasRole(user, role) {
+    return Array.isArray(user?.roles) && user.roles.includes(role);
+}
+
+function alertAdminDenied() {
+    alert('Access denied. You are not admin.');
+}
+
+function setupAdminLinkGuards(currentUser) {
+    document.querySelectorAll('a[href$="admin.html"]').forEach(link => {
+        link.addEventListener('click', event => {
+            if (hasRole(currentUser, 'ADMIN')) return;
+
+            event.preventDefault();
+            alertAdminDenied();
+        });
+    });
+}
+
+async function setupAdminPage() {
+    if (!window.location.pathname.toLowerCase().includes('admin')) return;
+
+    const user = await protectPage('Please log in as an admin to continue.');
+    if (!user) return;
+
+    if (!hasRole(user, 'ADMIN')) {
+        alertAdminDenied();
+        window.location.replace('index.html');
+        return;
+    }
+
+    const productForm = document.getElementById('admin-product-form');
+    if (productForm) {
+        productForm.addEventListener('submit', handleAdminProductSubmit);
+    }
+
+    const deleteForm = document.getElementById('admin-delete-form');
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', handleAdminDeleteSubmit);
+    }
+
+    const refreshButton = document.getElementById('admin-refresh');
+    if (refreshButton) {
+        refreshButton.addEventListener('click', loadAdminData);
+    }
+
+    await loadAdminData();
+}
+
+function getAdminProductPayload(form) {
+    const formData = new FormData(form);
+    const categoryId = formData.get('categoryId');
+
+    return {
+        name: formData.get('name'),
+        description: formData.get('description') || '',
+        price: Number(formData.get('price')),
+        stock: Number(formData.get('stock')),
+        imageUrl: formData.get('imageUrl') || '',
+        categoryId: categoryId ? Number(categoryId) : null
+    };
+}
+
+async function handleAdminProductSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const productId = new FormData(form).get('id');
+    const isUpdate = Boolean(productId);
+
+    try {
+        const response = await apiFetch(`${API_BASE_URL}/products${isUpdate ? `/${productId}` : ''}`, {
+            method: isUpdate ? 'PUT' : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(getAdminProductPayload(form))
+        });
+
+        if (response.ok) {
+            showStatus(isUpdate ? 'Product updated.' : 'Product added.');
+            form.reset();
+            await loadAdminProducts();
+            return;
+        }
+
+        await showApiError(response, 'Product save failed');
+    } catch (error) {
+        showStatus(error.message, true);
+    }
+}
+
+async function handleAdminDeleteSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const productId = new FormData(form).get('id');
+
+    if (!confirm(`Delete product #${productId}?`)) return;
+
+    try {
+        const response = await apiFetch(`${API_BASE_URL}/products/${productId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            showStatus('Product deleted.');
+            form.reset();
+            await loadAdminProducts();
+            return;
+        }
+
+        await showApiError(response, 'Product delete failed');
+    } catch (error) {
+        showStatus(error.message, true);
+    }
+}
+
+async function loadAdminData() {
+    await Promise.all([loadAdminProducts(), loadAdminOrders()]);
+}
+
+async function loadAdminProducts() {
+    const body = document.getElementById('admin-products-body');
+    const count = document.getElementById('admin-product-count');
+    if (!body) return;
+
+    const products = await fetchProducts();
+    if (count) {
+        count.textContent = `${products.length} product${products.length === 1 ? '' : 's'}`;
+    }
+
+    body.innerHTML = products.length === 0
+        ? '<tr><td colspan="5">No products found.</td></tr>'
+        : products.map(product => `
+            <tr>
+                <td>${product.id}</td>
+                <td>${escapeHtml(product.name)}</td>
+                <td>${formatPrice(product.price)}</td>
+                <td>${product.stock || 0}</td>
+                <td>${escapeHtml(product.category?.name || 'None')}</td>
+            </tr>
+        `).join('');
+}
+
+async function fetchAdminOrders() {
+    const response = await apiFetch(`${API_BASE_URL}/orders/admin`);
+    if (!response.ok) {
+        throw new Error(`Unable to load orders (${response.status})`);
+    }
+    return await response.json();
+}
+
+async function loadAdminOrders() {
+    const container = document.getElementById('admin-orders-container');
+    const count = document.getElementById('admin-order-count');
+    if (!container) return;
+
+    try {
+        const orders = await fetchAdminOrders();
+        if (count) {
+            count.textContent = `${orders.length} order${orders.length === 1 ? '' : 's'}`;
+        }
+
+        container.innerHTML = orders.length === 0
+            ? '<div class="empty-account-state"><h3>No orders yet</h3><p>Customer orders will appear here.</p></div>'
+            : orders.map(order => `
+                <details class="order-card">
+                    <summary>
+                        <div class="order-header-info">
+                            <strong>Order #${order.id}</strong>
+                            <span>${escapeHtml(order.customerEmail || 'No email')}</span>
+                            <span>${formatOrderDate(order.orderDate)}</span>
+                        </div>
+                        <span class="order-status">${formatPrice(order.totalAmount)}</span>
+                    </summary>
+                    <div class="order-details">
+                        ${(order.items || []).map(item => `
+                            <div class="order-item-row">
+                                <div>
+                                    <strong>${escapeHtml(item.productName || 'Product')}</strong>
+                                    <p>Qty ${item.quantity || 0} x ${formatPrice(item.unitPrice)}</p>
+                                </div>
+                                <span>${formatPrice(item.lineTotal)}</span>
+                            </div>
+                        `).join('') || '<p class="empty">No items saved for this order.</p>'}
+                    </div>
+                </details>
+            `).join('');
+    } catch (error) {
+        console.error('Failed to load admin orders:', error.message);
+        container.innerHTML = `
+            <div class="empty-account-state error-state">
+                <h3>Unable to load orders</h3>
+                <p>${escapeHtml(error.message)}</p>
+            </div>
+        `;
+    }
+}
+
 async function setupCheckoutPage() {
     if (!window.location.pathname.toLowerCase().includes('checkout')) return;
 
-    const user = await protectPage();
+    const user = await protectPage(LOGIN_REQUIRED_MESSAGE);
     if (!user) return;
 
     const emailInput = document.getElementById('email');
@@ -653,7 +970,21 @@ async function setupCheckoutPage() {
 
     form.addEventListener('submit', async event => {
         event.preventDefault();
+        const canOrder = await requireAuthenticatedAction(LOGIN_REQUIRED_MESSAGE);
+        if (!canOrder) return;
+
+        const cartItems = await getCart();
+        if (cartItems.length === 0) {
+            showStatus('Your cart is empty. Add a product before placing an order.', true);
+            return;
+        }
+
         const cartId = getCartId();
+        if (!cartId) {
+            showStatus('Your cart is empty. Add a product before placing an order.', true);
+            return;
+        }
+
         const formData = new FormData(form);
 
         try {
@@ -668,7 +999,7 @@ async function setupCheckoutPage() {
             });
 
             if (response.ok) {
-                localStorage.removeItem('cartId');
+                clearCartId();
                 window.location.href = 'thankyou.html';
                 return;
             }
@@ -718,20 +1049,20 @@ async function showApiError(response, fallbackMessage) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        await loadCsrfToken();
-    } catch (error) {
-        console.error(error.message);
-    }
-
     setupLoginForm();
     setupRegisterForm();
 
     const path = window.location.pathname.toLowerCase();
 
-    if (!path.includes('login') && !path.includes('signup')) {
+    const currentUser = !path.includes('login') && !path.includes('signup')
+        ? await getCurrentUser()
+        : null;
+
+    setupAdminLinkGuards(currentUser);
+
+    if (currentUser) {
         await initializeCart();
-        updateCartCount();
+        await updateCartCount();
     }
 
     if (path.includes('index') || path === '/' || path.endsWith('/index.html')) {
@@ -741,6 +1072,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const products = await fetchProducts();
         setupProductFilters(products);
     } else if (path.includes('cart')) {
+        const user = await protectPage(LOGIN_REQUIRED_MESSAGE);
+        if (!user) return;
+
+        await initializeCart();
         await renderCart();
         const clearBtn = document.getElementById('clear-cart');
         if (clearBtn) {
@@ -769,4 +1104,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await setupAccountPage();
     await setupCheckoutPage();
+    await setupAdminPage();
 });

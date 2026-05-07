@@ -1,7 +1,6 @@
 package com.ecommerce.controllers;
 
 import com.ecommerce.dto.AuthUserResponse;
-import com.ecommerce.dto.CsrfResponse;
 import com.ecommerce.dto.RegisterUserDto;
 import com.ecommerce.model.AppUser;
 import com.ecommerce.services.AuthService;
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,11 +23,6 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     private final AuthService authService;
-
-    @GetMapping("/csrf")
-    public CsrfResponse csrf(CsrfToken token) {
-        return new CsrfResponse(token.getHeaderName(), token.getParameterName(), token.getToken());
-    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthUserResponse> register(@Valid @RequestBody RegisterUserDto request) {

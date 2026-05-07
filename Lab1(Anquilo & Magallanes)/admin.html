@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - iPhone Shop</title>
+    <link rel="stylesheet" href="css(lab2)/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="account.html">Account</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-page">
+        <section class="admin-header">
+            <div>
+                <h1>Admin Panel</h1>
+                <p>Add, update, delete products, and review customer orders.</p>
+            </div>
+            <button id="admin-refresh" class="btn-secondary">Refresh Data</button>
+        </section>
+
+        <p id="page-status" class="auth-status"></p>
+
+        <section class="admin-grid">
+            <form id="admin-product-form" class="admin-panel">
+                <h2>Add / Update Product</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="admin-product-id">Product ID for update</label>
+                        <input id="admin-product-id" name="id" type="number" min="1" placeholder="Leave blank to add">
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-category-id">Category ID</label>
+                        <input id="admin-category-id" name="categoryId" type="number" min="1" placeholder="Optional">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-product-name">Product Name</label>
+                    <input id="admin-product-name" name="name" type="text" maxlength="255" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="admin-price">Price</label>
+                        <input id="admin-price" name="price" type="number" min="0.01" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-stock">Stock</label>
+                        <input id="admin-stock" name="stock" type="number" min="0" step="1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-image-url">Image URL</label>
+                    <input id="admin-image-url" name="imageUrl" type="text" maxlength="255" placeholder="images/example.jfif">
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-description">Description</label>
+                    <textarea id="admin-description" name="description" rows="4" maxlength="1000"></textarea>
+                </div>
+
+                <div class="admin-actions">
+                    <button type="submit" class="auth-submit">Save Product</button>
+                    <button type="reset" class="btn-secondary">Clear Form</button>
+                </div>
+            </form>
+
+            <section class="admin-panel">
+                <h2>Delete Product</h2>
+                <form id="admin-delete-form" class="admin-inline-form">
+                    <div class="form-group">
+                        <label for="delete-product-id">Product ID</label>
+                        <input id="delete-product-id" name="id" type="number" min="1" required>
+                    </div>
+                    <button type="submit" class="btn-remove">Delete Product</button>
+                </form>
+            </section>
+        </section>
+
+        <section class="admin-panel">
+            <div class="section-heading-row">
+                <h2>Products</h2>
+                <span id="admin-product-count">0 products</span>
+            </div>
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-products-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="admin-panel">
+            <div class="section-heading-row">
+                <h2>Orders</h2>
+                <span id="admin-order-count">0 orders</span>
+            </div>
+            <div id="admin-orders-container" class="admin-orders"></div>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

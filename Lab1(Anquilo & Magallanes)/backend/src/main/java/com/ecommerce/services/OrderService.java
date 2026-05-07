@@ -1,6 +1,8 @@
 package com.ecommerce.services;
 
+import com.ecommerce.dto.OrderItemResponseDto;
 import com.ecommerce.dto.OrderRequestDto;
+import com.ecommerce.dto.OrderResponseDto;
 import com.ecommerce.model.Cart;
 import com.ecommerce.model.CartItem;
 import com.ecommerce.model.Order;
@@ -9,6 +11,8 @@ import com.ecommerce.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +45,46 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
         cartService.clearCart(cart.getId());
         return savedOrder;
+    }
+
+    @Transactional(readOnly = true)
+    public List<OrderResponseDto> getOrdersForCustomer(String customerEmail) {
+        return orderRepository.findByCustomerEmailIgnoreCaseOrderByOrderDateDesc(customerEmail).stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<OrderResponseDto> getAllOrders() {
+        return orderRepository.findAllByOrderByOrderDateDesc().stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    private OrderResponseDto toResponse(Order order) {
+        List<OrderItemResponseDto> items = order.getOrderItems().stream()
+                .map(this::toItemResponse)
+                .toList();
+
+        return new OrderResponseDto(
+                order.getId(),
+                order.getCustomerName(),
+                order.getCustomerEmail(),
+                order.getOrderDate(),
+                order.getTotalAmount(),
+                items
+        );
+    }
+
+    private OrderItemResponseDto toItemResponse(OrderItem item) {
+        return new OrderItemResponseDto(
+                item.getId(),
+                item.getProduct().getId(),
+                item.getProduct().getName(),
+                item.getProduct().getImageUrl(),
+                item.getQuantity(),
+                item.getUnitPrice(),
+                item.getUnitPrice() * item.getQuantity()
+        );
     }
 }
