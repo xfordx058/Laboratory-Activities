@@ -1,0 +1,102 @@
+<!-- account.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - iPhone Shop</title>
+    <link rel="stylesheet" href="css(lab2)/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="account-page">
+        <section class="account-header">
+            <div class="user-avatar" aria-hidden="true"></div>
+            <div class="account-title">
+                <h1 id="user-greeting">Welcome back!</h1>
+                <p id="page-status" class="auth-status"></p>
+                <p class="member-since">Session protected customer profile</p>
+            </div>
+            <a href="products.html" class="account-cta">Shop Products</a>
+        </section>
+
+        
+        <section class="account-stats">
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <p id="total-orders">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Wishlist Items</h3>
+                <p id="wishlist-count">3</p>
+            </div>
+            <div class="stat-card">
+                <h3>Reward Points</h3>
+                <p id="reward-points">1,250</p>
+            </div>
+        </section>
+
+       
+        <section class="account-section">
+            <div class="section-heading-row">
+                <h2>Order History</h2>
+                <a href="Cart.html">View Cart</a>
+            </div>
+            <div id="orders-container">
+                <div class="empty-account-state">
+                    <h3>No recent orders</h3>
+                    <p>Completed checkouts will appear here after you place an order.</p>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="account-section">
+            <h2>Account Settings</h2>
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <h3>Personal Information</h3>
+                    <p>Update your profile details and preferences</p>
+                    <button class="account-action-btn">Edit Profile</button>
+                </div>
+                <div class="setting-card">
+                    <h3>Address Book</h3>
+                    <p>Manage shipping and billing addresses</p>
+                    <button class="account-action-btn">Manage Addresses</button>
+                </div>
+                <div class="setting-card">
+                    <h3>Payment Methods</h3>
+                    <p>Manage your credit cards and payment options</p>
+                    <button class="account-action-btn">View Cards</button>
+                </div>
+                <div class="setting-card">
+                    <h3>Security</h3>
+                    <p>Change password and security settings</p>
+                    <button class="account-action-btn">Security Settings</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="account-section logout-section">
+            <button id="logout-btn" class="btn-secondary logout-btn">Logout</button>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iPhone Shop | Premium Mobile Devices</title>
+    <link rel="stylesheet" href="css(lab2)/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-banner">
+        <h1>Welcome to iPhone Shop</h1>
+        <p>Premium iPhones at unbeatable prices</p>
+        <button onclick="window.location.href='products.html'">Shop Now</button>
+    </section>
+
+    <section class="Products">
+        <div class="prdct-header">
+            <h2>Featured Products</h2>
+            <p>Latest iPhone models with warranty</p>
+        </div>
+        <div id="featured-container" class="product-grid"></div>
+    </section>
+
+    <section class="Products">
+        <div class="prdct-header">
+            <h2>Discounted Products</h2>
+            <p>Limited time offers</p>
+        </div>
+        <div id="discounted-container" class="product-grid"></div>
+    </section>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - iPhone Shop</title>
+    <link rel="stylesheet" href="css(lab2)/style.css" />
+</head>
+<body>
+
+    <main class="auth-page">
+        <section class="auth-card">
+            <div class="auth-card-header">
+                <h1>Login</h1>
+                <p>Access your account to continue shopping and checkout securely.</p>
+            </div>
+            <p id="auth-status" class="auth-status"></p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <input id="username" name="username" type="text" autocomplete="username" placeholder="Enter your username or email." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="auth-submit">Login</button>
+            </form>
+            <p class="auth-switch">Need an account? <a href="signup.html">Create one</a></p>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
