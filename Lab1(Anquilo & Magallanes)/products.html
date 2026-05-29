@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - iPhone Shop</title>
+    <link rel="stylesheet" href="css(lab2)/style.css" />
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="products-page-layout">
+        <aside class="filter-panel">
+            <form id="filter-form">
+                <fieldset>
+                    <legend>Filter Products</legend>
+                    
+                    <h3>Model Series</h3>
+                    <label><input type="checkbox" name="series" value="17"> iPhone 17 Series</label><br>
+                    <label><input type="checkbox" name="series" value="16"> iPhone 16 Series</label><br>
+                    <label><input type="checkbox" name="series" value="15"> iPhone 15 Series</label><br>
+                    <label><input type="checkbox" name="series" value="13"> iPhone 13 Series</label>
+
+                    <h3>Storage</h3>
+                    <label><input type="radio" name="storage" value="all" checked> All</label><br>
+                    <label><input type="radio" name="storage" value="128"> 128GB</label><br>
+                    <label><input type="radio" name="storage" value="256"> 256GB</label><br>
+                    <label><input type="radio" name="storage" value="512"> 512GB</label>
+                </fieldset>
+            </form>
+        </aside>
+
+        <section class="products product-grid" id="product-container"></section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

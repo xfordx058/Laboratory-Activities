@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart | iPhone Shop</title>
+    <link rel="stylesheet" href="css(lab2)/style.css" />
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+        <div class="nav-wrap">
+            <nav class="navs">
+                <ul class="nav-li">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="Cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="Cart" id="cart-page">
+        <div class="cart-header">
+            <div>
+                <h1>Shopping Cart</h1>
+                <p>Review your items before secure checkout.</p>
+            </div>
+            <a href="products.html" class="cart-header-link">Continue Shopping</a>
+        </div>
+
+        <div id="cart-content">
+            <ul id="cart-list" class="cart-items"></ul>
+
+            <section class="subtotal-content">
+                <span class="subtotal-label">Order Summary</span>
+                <span class="subtotal-price" id="subtotal-price">Subtotal: PHP 0.00</span>
+                <div class="cart-actions">
+                    <a href="checkout.html" class="Proceed-btn">Proceed to Checkout</a>
+                    <button id="clear-cart" class="btn-secondary">Clear Cart</button>
+                </div>
+            </section>
+        </div>
+
+        <section class="message" id="empty-cart-message" style="display: none;">
+            <h2>Your cart is empty</h2>
+            <p>Add a phone to your cart before checkout.</p>
+            <a href="products.html" class="Proceed-btn">Continue Shopping</a>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

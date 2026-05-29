@@ -1,0 +1,30 @@
+<!-- thankyou.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - iPhone Shop</title>
+    <link rel="stylesheet" href="css(lab2)/style.css" />
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="iPhoneShop Logo" class="logo">
+        </div>
+    </header>
+
+    <main class="thankyou-page">
+        <div class="success-animation">✓</div>
+        <h1>Order Placed Successfully!</h1>
+        <p>Thank you for shopping with iPhone Shop.</p>
+        <p>Order Number: <strong>#<span id="order-number"></span></strong></p>
+        <a href="index.html" class="Proceed-btn">Continue Shopping</a>
+    </main>
+
+    <script>
+        document.getElementById('order-number').textContent = 
+            'IPH-' + Math.floor(100000 + Math.random() * 900000);
+    </script>
+</body>
+</html>
