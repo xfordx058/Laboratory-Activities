@@ -21,7 +21,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5500")  // Allow frontend
 public class CartController {
     
     private final CartService cartService;
