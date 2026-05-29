@@ -2,7 +2,7 @@
 // BASE API URL - Spring Boot backend
 // ============================================
 // Change DEPLOYED_BACKEND_URL to your Render/Heroku URL after deployment
-const DEPLOYED_BACKEND_URL = 'https://your-app.onrender.com';
+const DEPLOYED_BACKEND_URL = 'https://ford-x-eshop.onrender.com';
 const LOCAL_BACKEND_URL = `http://${window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'localhost'}:8080`;
 const BACKEND_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? LOCAL_BACKEND_URL : DEPLOYED_BACKEND_URL;
 const API_BASE_URL = `${BACKEND_BASE_URL}/api`;
