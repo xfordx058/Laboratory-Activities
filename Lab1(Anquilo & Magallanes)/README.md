@@ -1,7 +1,7 @@
-# E-Commerce Full-Stack Application - Lab 8
-## Database Integration with Spring Data JPA & Fetch API
+# E-Commerce Full-Stack Application
+## Full-Stack E-Commerce with Spring Boot, JWT Authentication & REST API
 
-**Lab 8 - Full-Stack Integration** demonstrates mastery of database schema design, JPA entity relationships, and asynchronous JavaScript data fetching with proper error handling.
+**Labs 1-10** demonstrates a full-stack e-commerce application with database integration, JWT authentication, and REST API design.
 
 ---
 
